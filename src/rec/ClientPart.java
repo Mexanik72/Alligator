@@ -59,4 +59,7 @@ public class ClientPart {
             e.printStackTrace();
         }   
     }
+    void adoptionFile(File selectedFile){
+    	
+    }
 }

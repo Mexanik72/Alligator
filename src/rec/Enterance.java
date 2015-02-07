@@ -107,21 +107,11 @@ public class Enterance extends javax.swing.JFrame {
 							e.printStackTrace();
 						}
 						if (User.getPassword().equals(pass)) {
-							JOptionPane.showMessageDialog(rootPane, "Good");
 							FlagWrongUser = true;
-							// camDataSource dataSource = new
-							// camDataSource(null);
-							// dataSource.setMainSource();
-							// dataSource.makeDataSourceCloneable();
-							// dataSource.startProcessing();
-							// RecordNew rn = new RecordNew(dataSource, User);
-							// rn.setSize(1280, 720);
-							// rn.setLocationRelativeTo(null);
-							// rn.setVisible(true);
-							ChooseWord cw = new ChooseWord(User);
-							cw.setSize(720, 720);
-							cw.setLocationRelativeTo(null);
-							cw.setVisible(true);
+							PlayOrCreate poc = new PlayOrCreate(User);
+							poc.setSize(720, 720);
+							poc.setLocationRelativeTo(null);
+							poc.setVisible(true);
 							this.dispose();
 						} else {
 							JOptionPane
