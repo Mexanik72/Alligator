@@ -44,6 +44,7 @@ public class ChooseWord extends javax.swing.JFrame {
 	}
 
 	private void initComponents() {
+		
 		centerPanel = new JPanel();
 		northPanel = new JPanel();
 		hiLabel = new JLabel();
@@ -55,16 +56,12 @@ public class ChooseWord extends javax.swing.JFrame {
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		centerPanel.setLayout(new GridLayout(2, 2, 50, 50));
 
-		Image canvas1 = null;
-		Image img1 = getToolkit().getImage("1.jpg");
-		Graphics g = canvas1.getGraphics();
-		g.drawImage(img1, 5, 5, this.canvas1);
-
 		button1.setSize(100, 40);
 		button1.setText(Words.get(random()));
 		button1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				button1ActionPerformed(evt);
+				String text = button1.getText();
+				buttonActionPerformed(text);
 			}
 		});
 		centerPanel.add(button1);
@@ -73,7 +70,8 @@ public class ChooseWord extends javax.swing.JFrame {
 		button2.setText(Words.get((int) (Math.random() * 4)));
 		button2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				button2ActionPerformed(evt);
+				String text = button2.getText();
+				buttonActionPerformed(text);
 			}
 		});
 		centerPanel.add(button2);
@@ -82,7 +80,8 @@ public class ChooseWord extends javax.swing.JFrame {
 		button3.setText(Words.get((int) (Math.random() * 4)));
 		button3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				button3ActionPerformed(evt);
+				String text = button3.getText();
+				buttonActionPerformed(text);
 			}
 		});
 		centerPanel.add(button3);
@@ -91,7 +90,8 @@ public class ChooseWord extends javax.swing.JFrame {
 		button4.setText(Words.get((int) (Math.random() * 4)));
 		button4.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				button4ActionPerformed(evt);
+				String text = button4.getText();
+				buttonActionPerformed(text);
 			}
 		});
 		centerPanel.add(button4);
@@ -123,9 +123,9 @@ public class ChooseWord extends javax.swing.JFrame {
 	private javax.swing.JButton button4;
 	private javax.swing.JLabel hiLabel;
 
-	private void button1ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void buttonActionPerformed(String text) {
 		for (int i = 0; i < Words.size(); i++) {
-			if (Words.get(i).equals(button1.getText())) {
+			if (Words.get(i).equals(text)) {
 				camDataSource dataSource = new camDataSource(null);
 				dataSource.setMainSource();
 				dataSource.makeDataSourceCloneable();
@@ -141,75 +141,7 @@ public class ChooseWord extends javax.swing.JFrame {
 				rn.setSize(1280, 720);
 				rn.setLocationRelativeTo(null);
 				rn.setVisible(true);
-				this.dispose();
-			}
-		}
-	}
-
-	private void button2ActionPerformed(java.awt.event.ActionEvent evt) {
-		for (int i = 0; i < Words.size(); i++) {
-			if (Words.get(i).equals(button2.getText())) {
-				camDataSource dataSource = new camDataSource(null);
-				dataSource.setMainSource();
-				dataSource.makeDataSourceCloneable();
-				dataSource.startProcessing();
-				dw = new DataBaseWord();
-				try {
-					WordFull = dw.getIdByWords(Words.get(i).toString());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				RecordNew rn = new RecordNew(dataSource, userNow, WordFull);
-				rn.setSize(1280, 720);
-				rn.setLocationRelativeTo(null);
-				rn.setVisible(true);
-				this.dispose();
-			}
-		}
-	}
-
-	private void button3ActionPerformed(java.awt.event.ActionEvent evt) {
-		for (int i = 0; i < Words.size(); i++) {
-			if (Words.get(i).equals(button3.getText())) {
-				camDataSource dataSource = new camDataSource(null);
-				dataSource.setMainSource();
-				dataSource.makeDataSourceCloneable();
-				dataSource.startProcessing();
-				dw = new DataBaseWord();
-				try {
-					WordFull = dw.getIdByWords(Words.get(i).toString());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				RecordNew rn = new RecordNew(dataSource, userNow, WordFull);
-				rn.setSize(1280, 720);
-				rn.setLocationRelativeTo(null);
-				rn.setVisible(true);
-				this.dispose();
-			}
-		}
-	}
-
-	private void button4ActionPerformed(java.awt.event.ActionEvent evt) {
-		for (int i = 0; i < Words.size(); i++) {
-			if (Words.get(i).equals(button4.getText())) {
-				camDataSource dataSource = new camDataSource(null);
-				dataSource.setMainSource();
-				dataSource.makeDataSourceCloneable();
-				dataSource.startProcessing();
-				dw = new DataBaseWord();
-				try {
-					WordFull = dw.getIdByWords(Words.get(i).toString());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				RecordNew rn = new RecordNew(dataSource, userNow, WordFull);
-				rn.setSize(1280, 720);
-				rn.setLocationRelativeTo(null);
-				rn.setVisible(true);
+				
 				this.dispose();
 			}
 		}
