@@ -55,11 +55,6 @@ public class ChooseWord extends javax.swing.JFrame {
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		centerPanel.setLayout(new GridLayout(2, 2, 50, 50));
 
-		Image canvas1 = null;
-		Image img1 = getToolkit().getImage("1.jpg");
-		Graphics g = canvas1.getGraphics();
-		g.drawImage(img1, 5, 5, this.canvas1);
-
 		button1.setSize(100, 40);
 		button1.setText(Words.get(random()));
 		button1.addActionListener(new java.awt.event.ActionListener() {

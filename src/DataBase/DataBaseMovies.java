@@ -15,7 +15,7 @@ public class DataBaseMovies {
 		String url = "jdbc:postgresql://localhost/alig";
 		return DriverManager.getConnection(url, "postgres", "toor123");
 	}
-	
+
 	public List<Integer> getMoviesIds() throws Exception {
 		List<Integer> moviesIds = new ArrayList<Integer>();
 		// Получение соединения с БД
@@ -35,7 +35,7 @@ public class DataBaseMovies {
 		con.close();
 		return moviesIds;
 	}
-	
+
 	public void addMovie(Movie movie) throws Exception {
 		// Получение соединения с БД
 		Connection con = getConnection();
@@ -44,7 +44,7 @@ public class DataBaseMovies {
 		PreparedStatement st = con.prepareStatement("Insert into movies"
 				+ "(pathtomovie, owner, name) " + "values (?, ?, ?)");
 		// Указание значений параметров запроса
-		
+
 		st.setString(1, movie.getpathtomovie());
 		st.setInt(2, movie.getOwner());
 		st.setString(3, movie.getName());

@@ -1,7 +1,9 @@
 package LookAndFeel;
 
 import javax.swing.*;
+import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicToggleButtonUI;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
@@ -24,9 +26,9 @@ public class MyButtonUI extends BasicToggleButtonUI
 
     public static Color buttonBg = new Color ( 205, 205, 225 );
 
-    private AbstractButton button;
+    private static AbstractButton button;
 
-    private Color topBg = new Color ( 255, 255, 255, 128 );
+    private Color topBg = Color.WHITE;
     private Color bg = Color.WHITE;
     private boolean alwaysDrawFocus = false;
 
@@ -56,6 +58,18 @@ public class MyButtonUI extends BasicToggleButtonUI
     private boolean sharpBottomLeft = false;
     private boolean sharpBottomRight = false;
 
+    private static MyButtonUI instance = null;
+
+    public static ComponentUI createUI ( JComponent c )
+    {
+        // —ÓÁ‰‡∏Ï ËÌÒÚ‡ÌÒ Ì‡¯Â„Ó UI
+        if ( instance == null )
+        {
+            instance = new MyButtonUI (button);
+        }
+        return instance;
+    }
+    
     public MyButtonUI ( final AbstractButton button )
     {
         this ( button, true, defaultMouseoverTransparency );
@@ -490,52 +504,54 @@ public class MyButtonUI extends BasicToggleButtonUI
         super.paint ( g, c );
     }
 
-    public static void main ( String[] args )
-    {
-        JFrame f = new JFrame ();
-
-        f.getRootPane ().setOpaque ( true );
-        f.getRootPane ().setBackground ( Color.WHITE );
-        f.getRootPane ().setBorder ( BorderFactory.createEmptyBorder ( 5, 5, 5, 5 ) );
-
-        f.getContentPane ().setLayout ( new FlowLayout ( FlowLayout.CENTER, 5, 5 ) );
-        f.getContentPane ().setBackground ( Color.WHITE );
-
-        final JButton b1 = new JButton ( "Button1" );
-        setupButtonUI ( b1, Arrays.asList ( 1, 3 ) );
-        final JButton b2 = new JButton ( "Button2" );
-        setupButtonUI ( b2, 0 );
-        final JButton b3 = new JButton ( "Button3" );
-        setupButtonUI ( b3, Arrays.asList ( 2, 4 ) );
-        f.getContentPane ().add ( new JPanel()
-        {
-            {
-                setOpaque ( false );
-                setLayout ( new GridLayout ( 1, 3, 0, 0 ) );
-                add ( b1 );
-                add ( b2 );
-                add ( b3 );
-            }
-        } );
-
-        JButton b4 = new JButton ( "Button4" );
-        setupButtonUI ( b4, 0 );
-        f.getContentPane ().add ( b4 );
-
-        JButton b5 = new JButton ( "Button5" );
-        setupDialogButtonUI ( b5, 0 );
-        f.getContentPane ().add ( b5 );
-
-        JButton b6 = new JButton ( "Button6" );
-        setupDialogButtonUI ( b6, -1 );
-        f.getContentPane ().add ( b6 );
-
-        f.setDefaultCloseOperation (
-                args.length > 0 ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE );
-        f.pack ();
-        f.setLocationRelativeTo ( null );
-        f.setVisible ( true );
-    }
+	// public static void main ( String[] args )
+	// {
+	// JFrame f = new JFrame ();
+	//
+	// f.getRootPane ().setOpaque ( true );
+	// f.getRootPane ().setBackground ( Color.WHITE );
+	// f.getRootPane ().setBorder ( BorderFactory.createEmptyBorder ( 5, 5, 5, 5
+	// ) );
+	//
+	// f.getContentPane ().setLayout ( new FlowLayout ( FlowLayout.CENTER, 5, 5
+	// ) );
+	// f.getContentPane ().setBackground ( Color.WHITE );
+	//
+	// final JButton b1 = new JButton ( "Button1" );
+	// setupButtonUI ( b1, Arrays.asList ( 1, 3 ) );
+	// final JButton b2 = new JButton ( "Button2" );
+	// setupButtonUI ( b2, 0 );
+	// final JButton b3 = new JButton ( "Button3" );
+	// setupButtonUI ( b3, Arrays.asList ( 2, 4 ) );
+	// f.getContentPane ().add ( new JPanel()
+	// {
+	// {
+	// setOpaque ( false );
+	// setLayout ( new GridLayout ( 1, 3, 0, 0 ) );
+	// add ( b1 );
+	// add ( b2 );	
+	// add ( b3 );
+	// }
+	// } );
+	//
+	// JButton b4 = new JButton ( "Button4" );
+	// setupButtonUI ( b4, 0 );
+	// f.getContentPane ().add ( b4 );
+	//
+	// JButton b5 = new JButton ( "Button5" );
+	// setupDialogButtonUI ( b5, 0 );
+	// f.getContentPane ().add ( b5 );
+	//
+	// JButton b6 = new JButton ( "Button6" );
+	// setupDialogButtonUI ( b6, -1 );
+	// f.getContentPane ().add ( b6 );
+	//
+	// f.setDefaultCloseOperation (
+	// args.length > 0 ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE );
+	// f.pack ();
+	// f.setLocationRelativeTo ( null );
+	// f.setVisible ( true );
+	// }
 
     /*
     * –ú–µ—Ç–æ–¥—ã –¥–ª—è —É–ø—Ä–æ—â–µ–Ω–∏—è —Å—Ç–∏–ª–∏–∑–∞—Ü–∏–∏ –∫–Ω–æ–ø–æ–∫

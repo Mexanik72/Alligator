@@ -1,6 +1,7 @@
 package rec;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -8,13 +9,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.alee.laf.button.WebButton;
-import com.alee.laf.button.WebButtonUI;
-import com.alee.laf.label.WebLabel;
-
 import CustomClass.User;
 import DataBase.DataBaseUsers;
 import LookAndFeel.MyButtonUI;
+
 
 public class Enterance extends javax.swing.JFrame {
 
@@ -47,7 +45,8 @@ public class Enterance extends javax.swing.JFrame {
 		password.setBounds(40, 120, 200, 40);
 		submit.setBounds(60, 180, 160, 40);
 		submit.setText("Submit");
-		submit.setUI(new MyButtonUI(submit));
+		//submit.setUI(new MyButtonUI(submit));
+		MyButtonUI.setupButtonUI ( submit, 0);
 		centerPanel.add(userName);
 		centerPanel.add(password);
 		submit.addActionListener(new java.awt.event.ActionListener() {
