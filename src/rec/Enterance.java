@@ -8,8 +8,13 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import com.alee.laf.button.WebButton;
+import com.alee.laf.button.WebButtonUI;
+import com.alee.laf.label.WebLabel;
+
 import CustomClass.User;
 import DataBase.DataBaseUsers;
+import LookAndFeel.MyButtonUI;
 
 public class Enterance extends javax.swing.JFrame {
 
@@ -42,6 +47,7 @@ public class Enterance extends javax.swing.JFrame {
 		password.setBounds(40, 120, 200, 40);
 		submit.setBounds(60, 180, 160, 40);
 		submit.setText("Submit");
+		submit.setUI(new MyButtonUI(submit));
 		centerPanel.add(userName);
 		centerPanel.add(password);
 		submit.addActionListener(new java.awt.event.ActionListener() {
@@ -59,20 +65,20 @@ public class Enterance extends javax.swing.JFrame {
 		});
 		centerPanel.add(registr);
 		pack();
-		try {
-			// меняем
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			//
-			// попробуй еще так
-			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-			// или так
-			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-			//
-			// обновляем дерево компонентов
-			SwingUtilities.updateComponentTreeUI(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			// меняем
+//			//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//			//
+//			// попробуй еще так
+//			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+//			// или так
+//			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+//			//
+//			// обновляем дерево компонентов
+//			SwingUtilities.updateComponentTreeUI(this);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	private javax.swing.JPanel centerPanel;

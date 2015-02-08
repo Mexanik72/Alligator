@@ -43,7 +43,7 @@ public class PlayOrCreate extends JFrame{
 	}
 
 	private void playActionPerformed(java.awt.event.ActionEvent evt) {
-		PlayVideo pv = new PlayVideo();
+		PlayVideo pv = new PlayVideo(userNow);
 		this.dispose();
 	}
 	

@@ -1,6 +1,9 @@
 package rec;
 
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +28,7 @@ public class ChooseWord extends javax.swing.JFrame {
 	private List<String> Words;
 	private Word WordFull;
 	public DataBaseWord dw;
+	private ImageObserver canvas1;
 
 	public ChooseWord(User user) {
 		this.userNow = user;
@@ -50,6 +54,11 @@ public class ChooseWord extends javax.swing.JFrame {
 
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		centerPanel.setLayout(new GridLayout(2, 2, 50, 50));
+
+		Image canvas1 = null;
+		Image img1 = getToolkit().getImage("1.jpg");
+		Graphics g = canvas1.getGraphics();
+		g.drawImage(img1, 5, 5, this.canvas1);
 
 		button1.setSize(100, 40);
 		button1.setText(Words.get(random()));
