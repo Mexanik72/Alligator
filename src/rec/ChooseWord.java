@@ -1,34 +1,23 @@
 package rec;
 
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
-import java.security.SecureRandom;
 import java.util.List;
-import java.util.UUID;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseWord;
 
 public class ChooseWord extends javax.swing.JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private User userNow;
 	private List<String> Words;
 	private Word WordFull;
 	public DataBaseWord dw;
-	private ImageObserver canvas1;
 
 	public ChooseWord(User user) {
 		this.userNow = user;
