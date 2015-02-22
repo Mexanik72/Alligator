@@ -10,16 +10,11 @@ import java.util.List;
 import CustomClass.User;
 
 public class DataBaseUsers {
-	private Connection getConnection() throws Exception {
-		Class.forName("org.postgresql.Driver").newInstance();
-		String url = "jdbc:postgresql://localhost/alig";
-		return DriverManager.getConnection(url, "postgres", "toor123");
-	}
 
 	public List<Integer> getUsersIds() throws Exception {
 		List<Integer> usersIds = new ArrayList<Integer>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -39,7 +34,7 @@ public class DataBaseUsers {
 	public List<String> getUsersNames() throws Exception {
 		List<String> usersNames = new ArrayList<String>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -59,7 +54,7 @@ public class DataBaseUsers {
 	public User getUserByUsername(String username) throws Exception {
 		User users = new User();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Select id, name, password, score "
@@ -89,7 +84,7 @@ public class DataBaseUsers {
 	public List<User> getUserById(int id) throws Exception {
 		List<User> users = new ArrayList<User>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Select name, username, password, score "
@@ -118,7 +113,7 @@ public class DataBaseUsers {
 	
 	public void addUser(User user) throws Exception {
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Insert into users"

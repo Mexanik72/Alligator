@@ -1,15 +1,22 @@
 package rec;
 
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.List;
+
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseWord;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class ChooseWord extends javax.swing.JFrame {
 
@@ -36,6 +43,7 @@ public class ChooseWord extends javax.swing.JFrame {
 		
 		centerPanel = new JPanel();
 		northPanel = new JPanel();
+		southPanel = new JPanel();
 		hiLabel = new JLabel();
 		button1 = new JButton();
 		button2 = new JButton();
@@ -93,6 +101,9 @@ public class ChooseWord extends javax.swing.JFrame {
 				+ " please, choose 1 of the buttons");
 		northPanel.add(hiLabel);
 		add(northPanel, java.awt.BorderLayout.NORTH);
+		
+		southPanel.setLayout(new java.awt.BorderLayout());
+		add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		setTitle("ChooseWord");
 		setSize(350, 300);
@@ -106,6 +117,7 @@ public class ChooseWord extends javax.swing.JFrame {
 
 	private javax.swing.JPanel centerPanel;
 	private javax.swing.JPanel northPanel;
+	private javax.swing.JPanel southPanel;
 	private javax.swing.JButton button1;
 	private javax.swing.JButton button2;
 	private javax.swing.JButton button3;
@@ -130,6 +142,11 @@ public class ChooseWord extends javax.swing.JFrame {
 				rn.setSize(1280, 720);
 				rn.setLocationRelativeTo(null);
 				rn.setVisible(true);
+				
+				Image img = java.awt.Toolkit.getDefaultToolkit().getImage("219.GIF");
+			    ImageIcon ic = new ImageIcon(img);
+			 
+			    getContentPane().add(new JLabel(ic));
 				
 				this.dispose();
 			}

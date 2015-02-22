@@ -10,16 +10,11 @@ import java.util.List;
 import CustomClass.Word;
 
 public class DataBaseWord {
-	private Connection getConnection() throws Exception {
-		Class.forName("org.postgresql.Driver").newInstance();
-		String url = "jdbc:postgresql://localhost/alig";
-		return DriverManager.getConnection(url, "postgres", "toor123");
-	}
 
 	public List<Integer> getWordsIds() throws Exception {
 		List<Integer> wordsIds = new ArrayList<Integer>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -39,7 +34,7 @@ public class DataBaseWord {
 	public List<String> getWords() throws Exception {
 		List<String> Words = new ArrayList<String>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -59,8 +54,7 @@ public class DataBaseWord {
 	public List<Word> getWordById(int id) throws Exception {
 		List<Word> words = new ArrayList<Word>();
 		// Получение соединения с БД
-		Connection con = getConnection();
-
+		Connection con = GetConnection.getConnection();
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Select word, rate "
 				+ "From words " + "Where id = ?");
@@ -88,7 +82,7 @@ public class DataBaseWord {
 	public Word getIdByWords(String word) throws Exception {
 		Word words = new Word();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Select id, rate "
@@ -115,7 +109,7 @@ public class DataBaseWord {
 	
 	public void addWord(Word word) throws Exception {
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Insert into words"
