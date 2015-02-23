@@ -124,4 +124,21 @@ public class DataBaseWord {
 
 		con.close();
 	}
+	
+	public int getCount() throws Exception {
+		
+		Connection con = GetConnection.getConnection();
+		PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM words;");
+		ResultSet rs = st.executeQuery();
+		
+		int count = 0;
+		while (rs.next()) {
+			count = rs.getInt(1);
+		}
+		
+		rs.close();
+		con.close();
+		
+		return count;
+	}
 }
