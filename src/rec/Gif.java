@@ -16,7 +16,6 @@ public class Gif extends JFrame {
 	private static final long serialVersionUID = 1170020159907047430L;
 
 	public Gif() {
-		
 		JPanel centerPanel = new JPanel();
 		JLabel wait = new JLabel("Пожалуйста, подождите...");
 //		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -33,6 +32,9 @@ public class Gif extends JFrame {
 	    JLabel label = new JLabel(icon);
 	    centerPanel.add(wait);
 	    centerPanel.add(label);
-	    setVisible(true);
+	    setVisible(true); 
+	    
+	    while(!Thread.currentThread().isInterrupted()) {}
+	    this.dispose();
 	}
 }

@@ -146,6 +146,7 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable{
 		
 		Thread thread = new Thread(new ChooseWord());
 		thread.start();
+		this.dispose();
 		
 		camDataSource dataSource = new camDataSource();
 		dataSource.setMainSource();
@@ -165,7 +166,7 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable{
 		rn.setVisible(true);
 		thread.interrupt();
 				
-		this.dispose();
+		
 	}
 
 	@Override
