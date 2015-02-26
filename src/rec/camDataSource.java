@@ -16,6 +16,8 @@ public class camDataSource {
 	private MediaLocator ml;
 	private Processor processor;
 	private boolean processing;
+	
+	public camDataSource() {}
 
 	public camDataSource(Component parent) {
 		this.parent = parent;
