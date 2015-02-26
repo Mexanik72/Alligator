@@ -1,9 +1,7 @@
 package LookAndFeel;
 
 import javax.swing.*;
-import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicToggleButtonUI;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
@@ -26,7 +24,7 @@ public class MyButtonUI extends BasicToggleButtonUI
 
     public static Color buttonBg = new Color ( 205, 205, 225 );
 
-    private static AbstractButton button;
+    private AbstractButton button;
 
     private Color topBg = Color.WHITE;
     private Color bg = Color.WHITE;
@@ -58,18 +56,6 @@ public class MyButtonUI extends BasicToggleButtonUI
     private boolean sharpBottomLeft = false;
     private boolean sharpBottomRight = false;
 
-    private static MyButtonUI instance = null;
-
-    public static ComponentUI createUI ( JComponent c )
-    {
-        // Создаём инстанс нашего UI
-        if ( instance == null )
-        {
-            instance = new MyButtonUI (button);
-        }
-        return instance;
-    }
-    
     public MyButtonUI ( final AbstractButton button )
     {
         this ( button, true, defaultMouseoverTransparency );

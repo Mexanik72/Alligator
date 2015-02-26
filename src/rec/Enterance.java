@@ -1,9 +1,11 @@
 package rec;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -11,7 +13,9 @@ import javax.swing.UIManager;
 
 import CustomClass.User;
 import DataBase.DataBaseUsers;
+import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
+import LookAndFeel.TextFieldChecker;
 
 
 public class Enterance extends javax.swing.JFrame {
@@ -42,6 +46,7 @@ public class Enterance extends javax.swing.JFrame {
 
 		getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 		userName.setBounds(40, 40, 200, 40);
+		//TextFieldChecker.setupTectFiiedChecker(userName);
 		password.setBounds(40, 120, 200, 40);
 		submit.setBounds(60, 180, 160, 40);
 		submit.setText("Submit");
@@ -129,6 +134,8 @@ public class Enterance extends javax.swing.JFrame {
 					JOptionPane
 							.showMessageDialog(rootPane,
 									"Вы ввели неверный username, повторите пожалуйста ввод");
+					CustomDialog.showTooltipWindow(userName);
+					userName.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}
 			} else {
 				JOptionPane
