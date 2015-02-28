@@ -53,8 +53,8 @@ public class Enterance extends javax.swing.JFrame {
 		submit = new javax.swing.JButton();
 		registr = new javax.swing.JButton();
 		jPanel1 = new JLabel();
-		labelforuser = new JLabel();
-		labelforpass = new JLabel();
+		labelForUser = new JLabel();
+		labelForPass = new JLabel();
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Alligator:Enterance");
@@ -66,22 +66,21 @@ public class Enterance extends javax.swing.JFrame {
 		jPanel1.setIcon(new ImageIcon(all128));
 		//jPanel1.getIcon();
 		//getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
-		labelforuser.setLabelFor(userName);
-		labelforuser.setText("Логин");
-		labelforuser.setBounds(40, 10, 200, 25);
-		labelforuser.setFont(font);
-		labelforuser.setForeground(new Color(79,68,3));
+		labelForUser.setLabelFor(userName);
+		labelForUser.setText("Логин");
+		labelForUser.setBounds(40, 10, 200, 25);
+		labelForUser.setFont(font);
+		labelForUser.setForeground(new Color(79,68,3));
 		
-		labelforpass.setText("Пароль");
-		labelforpass.setBounds(40, 90, 200, 25);
-		labelforpass.setLabelFor(password);
-		labelforpass.setFont(font);
-		labelforpass.setForeground(new Color(79,68,3));
+		labelForPass.setText("Пароль");
+		labelForPass.setBounds(40, 90, 200, 25);
+		labelForPass.setLabelFor(password);
+		labelForPass.setFont(font);
+		labelForPass.setForeground(new Color(79,68,3));
 		
 		
 		
 		userName.setBounds(40, 40, 200, 40);
-		// TextFieldChecker.setupTectFiiedChecker(userName);
 		password.setBounds(40, 120, 200, 40);
 		jPanel1.setBounds(280, -20, 200, 240);
 		jPanel1.setVisible(true);
@@ -90,8 +89,8 @@ public class Enterance extends javax.swing.JFrame {
 		// submit.setUI(new MyButtonUI(submit));
 		MyButtonUI.setupButtonUI(submit, 0);
 		MyButtonUI.setupButtonUI(registr, 0);
-		centerPanel.add(labelforuser);
-		centerPanel.add(labelforpass);
+		centerPanel.add(labelForUser);
+		centerPanel.add(labelForPass);
 		centerPanel.add(userName);
 		centerPanel.add(password);
 		centerPanel.add(jPanel1);
@@ -136,8 +135,8 @@ public class Enterance extends javax.swing.JFrame {
 	private javax.swing.JButton submit;
 	private javax.swing.JButton registr;
 	private JLabel jPanel1;
-	private JLabel labelforuser;
-	private JLabel labelforpass;
+	private JLabel labelForUser;
+	private JLabel labelForPass;
 
 	private void submitActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:

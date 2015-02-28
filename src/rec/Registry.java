@@ -36,9 +36,9 @@ public class Registry extends JFrame {
 		label = new javax.swing.JLabel();
 		nameField = new javax.swing.JTextField();
 		jPanel1 = new JLabel();
-		labelforuser = new JLabel();
-		labelforpass = new JLabel();
-		labelforname = new JLabel();
+		labelForUser = new JLabel();
+		labelForPass = new JLabel();
+		labelForName = new JLabel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Alligator:Registry");
@@ -52,26 +52,26 @@ public class Registry extends JFrame {
 		jPanel1.setBounds(280, -20, 200, 240);
 		
 		//getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
-		labelforuser.setLabelFor(userName);
-		labelforuser.setBounds(40, 10, 200, 25);
-		labelforuser.setText("Логин");
-		labelforuser.setFont(font);
-		labelforuser.setForeground(new Color(79,68,3));
-		centerPanel.add(labelforuser);
+		labelForUser.setLabelFor(userName);
+		labelForUser.setBounds(40, 10, 200, 25);
+		labelForUser.setText("Логин");
+		labelForUser.setFont(font);
+		labelForUser.setForeground(new Color(79,68,3));
+		centerPanel.add(labelForUser);
 
-		labelforuser.setLabelFor(password);
-		labelforpass.setBounds(40, 90, 200, 25);
-		labelforpass.setText("Пароль");
-		labelforpass.setFont(font);
-		labelforpass.setForeground(new Color(79,68,3));
-		centerPanel.add(labelforpass);
+		labelForUser.setLabelFor(password);
+		labelForPass.setBounds(40, 90, 200, 25);
+		labelForPass.setText("Пароль");
+		labelForPass.setFont(font);
+		labelForPass.setForeground(new Color(79,68,3));
+		centerPanel.add(labelForPass);
 		
-		labelforuser.setLabelFor(nameField);
-		labelforname.setBounds(40, 170, 200, 25);
-		labelforname.setText("Имя");
-		labelforname.setFont(font);
-		labelforname.setForeground(new Color(79,68,3));
-		centerPanel.add(labelforname);
+		labelForUser.setLabelFor(nameField);
+		labelForName.setBounds(40, 170, 200, 25);
+		labelForName.setText("Имя");
+		labelForName.setFont(font);
+		labelForName.setForeground(new Color(79,68,3));
+		centerPanel.add(labelForName);
 		
 		userName.setBounds(40, 40, 200, 40);
 		centerPanel.add(userName);
@@ -105,9 +105,9 @@ public class Registry extends JFrame {
 	private javax.swing.JLabel name;
 	private javax.swing.JTextField nameField;
 	private javax.swing.JLabel jPanel1;
-	private javax.swing.JLabel labelforuser;
-	private javax.swing.JLabel labelforpass;
-	private javax.swing.JLabel labelforname;
+	private javax.swing.JLabel labelForUser;
+	private javax.swing.JLabel labelForPass;
+	private javax.swing.JLabel labelForName;
 
 	private void submitActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
