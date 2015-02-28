@@ -6,20 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
+import DataBase.GetConnection;
 import CustomClass.Movie;
 
 public class DataBaseMovies {
-	private Connection getConnection() throws Exception {
-		Class.forName("org.postgresql.Driver").newInstance();
-		String url = "jdbc:postgresql://localhost/alig";
-		return DriverManager.getConnection(url, "postgres", "toor123");
-	}
 
 	public List<Integer> getMoviesIds() throws Exception {
 		List<Integer> moviesIds = new ArrayList<Integer>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -38,7 +33,7 @@ public class DataBaseMovies {
 
 	public void addMovie(Movie movie) throws Exception {
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Insert into movies"
