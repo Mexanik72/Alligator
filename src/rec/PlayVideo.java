@@ -16,26 +16,47 @@ import javax.media.RealizeCompleteEvent;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import CustomClass.User;
+import LookAndFeel.HintTextField;
 
 public class PlayVideo extends JFrame {
 
-	Player player;
-	Component center;
-	Component south;
-	User userNow;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5485026095222917165L;
+	
+	private Player player;
+	private Component center;
+	private Component south;
+	private User userNow;
+	private JFileChooser movieChooser;
+	private JButton button;
 
 	public PlayVideo(User user) {
+
+		if (movieChooser == null)
+			movieChooser = new JFileChooser();
+		movieChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		movieChooser.addChoosableFileFilter(new MOVFilter());
+		movieChooser.setAcceptAllFileFilterUsed(false);
+		movieChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
 		this.userNow = user;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JButton button = new JButton("Select File");
+		button = new JButton("Select File");
 		ActionListener listener = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				JFileChooser chooser = new JFileChooser(".");
-				int status = chooser.showOpenDialog(PlayVideo.this);
+
+				int status = movieChooser.showOpenDialog(PlayVideo.this);
 				if (status == JFileChooser.APPROVE_OPTION) {
-					File file = chooser.getSelectedFile();
+					File file = movieChooser.getSelectedFile();
+					if (!file.getName().endsWith(".mov")
+							&& !file.getName().endsWith(".MOV"))
+						file = new File(file.toString() + ".mov");
 					try {
 						load(file);
 					} catch (Exception e) {
@@ -62,6 +83,7 @@ public class PlayVideo extends JFrame {
 				Component vc = player.getVisualComponent();
 				if (vc != null) {
 					contentPane.add(vc, BorderLayout.CENTER);
+					vc.requestFocus();
 					center = vc;
 				} else {
 					if (center != null) {
@@ -85,5 +107,8 @@ public class PlayVideo extends JFrame {
 		};
 		player.addControllerListener(listener);
 		player.start();
+		getContentPane().remove(button);
+		JTextField crocoText = new HintTextField("Guess who?");
+		contentPane.add(crocoText, BorderLayout.NORTH);
 	}
 }

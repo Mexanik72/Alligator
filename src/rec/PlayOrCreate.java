@@ -22,13 +22,13 @@ public class PlayOrCreate extends JFrame{
 		
 		play.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				playActionPerformed(evt);
+				playActionPerformed();
 			}
 		});
 		
 		create.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				createActionPerformed(evt);
+				createActionPerformed();
 			}
 		});
 		
@@ -42,12 +42,12 @@ public class PlayOrCreate extends JFrame{
 		centerPanel.add(create);
 	}
 
-	private void playActionPerformed(java.awt.event.ActionEvent evt) {
+	private void playActionPerformed() {
 		PlayVideo pv = new PlayVideo(userNow);
 		this.dispose();
 	}
 	
-	private void createActionPerformed(java.awt.event.ActionEvent evt) {
+	private void createActionPerformed() {
 		ChooseWord cw = new ChooseWord(userNow);
 		cw.setSize(720, 720);
 		cw.setLocationRelativeTo(null);

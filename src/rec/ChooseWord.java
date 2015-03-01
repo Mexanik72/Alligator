@@ -141,7 +141,6 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable{
 	private javax.swing.JButton button4;
 	private javax.swing.JLabel hiLabel;
 
-	@SuppressWarnings("deprecation")
 	private void buttonActionPerformed(String text) {
 		
 		Thread thread = new Thread(new ChooseWord());
@@ -165,14 +164,10 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable{
 	    
 		rn.setVisible(true);
 		thread.interrupt();
-				
-		
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println("hello");
 		new Gif();
 	}
 }
