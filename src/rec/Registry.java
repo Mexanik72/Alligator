@@ -1,10 +1,17 @@
 package rec;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import CustomClass.User;
 import DataBase.DataBaseUsers;
+import LookAndFeel.MyButtonUI;
 
 public class Registry extends JFrame {
 	/**
@@ -12,46 +19,74 @@ public class Registry extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
+
+	private String all128 = "src/Images/all128.png";
+	Font font = new Font("Verdana", Font.BOLD, 24);
+	
 	public Registry() {
 		initComponents();
 	}
 
 	private void initComponents() {
 
-		
-		centerPanel = new javax.swing.JPanel();
+		//centerPanel = new javax.swing.JPanel();
 		userName = new javax.swing.JTextField();
 		password = new javax.swing.JPasswordField();
 		submit = new javax.swing.JButton();
 		label = new javax.swing.JLabel();
-		name = new javax.swing.JLabel();
 		nameField = new javax.swing.JTextField();
+		jPanel1 = new JLabel();
+		labelForUser = new JLabel();
+		labelForPass = new JLabel();
+		labelForName = new JLabel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Alligator");
+		setTitle("Alligator:Registry");
 
+		setContentPane(new Fon());
+		Container centerPanel = getContentPane();
+		
 		centerPanel.setLayout(null);
+		jPanel1.setIcon(new ImageIcon(all128));
+		centerPanel.add(jPanel1);
+		jPanel1.setBounds(280, -20, 200, 240);
+		
+		//getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
+		labelForUser.setLabelFor(userName);
+		labelForUser.setBounds(40, 10, 200, 25);
+		labelForUser.setText("Логин");
+		labelForUser.setFont(font);
+		labelForUser.setForeground(new Color(79,68,3));
+		centerPanel.add(labelForUser);
 
-		getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
-		label.setBounds(0, 0, 200, 20);
-		label.setText("Registry");
-		centerPanel.add(label);
-
+		labelForUser.setLabelFor(password);
+		labelForPass.setBounds(40, 90, 200, 25);
+		labelForPass.setText("Пароль");
+		labelForPass.setFont(font);
+		labelForPass.setForeground(new Color(79,68,3));
+		centerPanel.add(labelForPass);
+		
+		labelForUser.setLabelFor(nameField);
+		labelForName.setBounds(40, 170, 200, 25);
+		labelForName.setText("Имя");
+		labelForName.setFont(font);
+		labelForName.setForeground(new Color(79,68,3));
+		centerPanel.add(labelForName);
+		
 		userName.setBounds(40, 40, 200, 40);
 		centerPanel.add(userName);
 
 		password.setBounds(40, 120, 200, 40);
 		centerPanel.add(password);
 
-		name.setBounds(0, 180, 200, 40);
-		name.setText("Name:");
-		centerPanel.add(name);
 
-		nameField.setBounds(40, 180, 200, 40);
+		nameField.setBounds(40, 200, 200, 40);
 		centerPanel.add(nameField);
 
-		submit.setBounds(60, 220, 160, 40);
-		submit.setText("Submit");
+		
+		MyButtonUI.setupButtonUI(submit, 0);
+		submit.setBounds(60, 260, 160, 40);
+		submit.setText("Зарегестрироваться");
 		submit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				submitActionPerformed(evt);
@@ -69,6 +104,10 @@ public class Registry extends JFrame {
 	private javax.swing.JLabel label;
 	private javax.swing.JLabel name;
 	private javax.swing.JTextField nameField;
+	private javax.swing.JLabel jPanel1;
+	private javax.swing.JLabel labelForUser;
+	private javax.swing.JLabel labelForPass;
+	private javax.swing.JLabel labelForName;
 
 	private void submitActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:

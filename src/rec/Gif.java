@@ -1,16 +1,22 @@
 package rec;
 
 import java.net.URL;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import LookAndFeel.MySliderUI;
+
 public class Gif extends JFrame {
 	
 	private static final long serialVersionUID = 1170020159907047430L;
 
+	//public static final ImageIcon Kroko =
+      //      new ImageIcon ( ChooseWord.class.getResource ( "ChooseWord.Images/ka5r6r74nho.png" ) );
+	
 	public Gif() {
 		initComponents();
 		

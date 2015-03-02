@@ -6,11 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
+import DataBase.GetConnection;
 import CustomClass.Movie;
 
 public class DataBaseMovies {
-	
+
 	public List<Integer> getMoviesIds() throws Exception {
 		List<Integer> moviesIds = new ArrayList<Integer>();
 		// Получение соединения с БД
@@ -30,7 +30,7 @@ public class DataBaseMovies {
 		con.close();
 		return moviesIds;
 	}
-	
+
 	public void addMovie(Movie movie) throws Exception {
 		// Получение соединения с БД
 		Connection con = GetConnection.getConnection();
@@ -39,7 +39,7 @@ public class DataBaseMovies {
 		PreparedStatement st = con.prepareStatement("Insert into movies"
 				+ "(pathtomovie, owner, name) " + "values (?, ?, ?)");
 		// Указание значений параметров запроса
-		
+
 		st.setString(1, movie.getpathtomovie());
 		st.setInt(2, movie.getOwner());
 		st.setString(3, movie.getName());

@@ -1,16 +1,33 @@
 package rec;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import CustomClass.User;
 import DataBase.DataBaseUsers;
+import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
+import LookAndFeel.TextFieldChecker;
 
 public class Enterance extends javax.swing.JFrame {
 
@@ -19,33 +36,64 @@ public class Enterance extends javax.swing.JFrame {
 	 */
 	Registry reg = null;
 	private static final long serialVersionUID = 1L;
-
+	private String imgFile = "src/Images/ka5r6r74nho.png";
+	private String all64 = "src/Images/all64.png";
+	private String all128 = "src/Images/all128.png";
 	// private camDataSource dataSource;
+	Font font = new Font("Verdana", Font.BOLD, 24);
 
 	public Enterance() {
 		initComponents();
 	}
 
 	private void initComponents() {
-		centerPanel = new javax.swing.JPanel();
+		//centerPanel = new javax.swing.JPanel();
 		userName = new javax.swing.JTextField();
 		password = new javax.swing.JPasswordField();
 		submit = new javax.swing.JButton();
 		registr = new javax.swing.JButton();
-
+		jPanel1 = new JLabel();
+		labelForUser = new JLabel();
+		labelForPass = new JLabel();
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Alligator:Registr");
-
+		setTitle("Alligator:Enterance");
+		
+		setContentPane(new Fon());
+		Container centerPanel = getContentPane();
+		
 		centerPanel.setLayout(null);
-
-		getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
+		jPanel1.setIcon(new ImageIcon(all128));
+		//jPanel1.getIcon();
+		//getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+		labelForUser.setLabelFor(userName);
+		labelForUser.setText("Логин");
+		labelForUser.setBounds(40, 10, 200, 25);
+		labelForUser.setFont(font);
+		labelForUser.setForeground(new Color(79,68,3));
+		
+		labelForPass.setText("Пароль");
+		labelForPass.setBounds(40, 90, 200, 25);
+		labelForPass.setLabelFor(password);
+		labelForPass.setFont(font);
+		labelForPass.setForeground(new Color(79,68,3));
+		
+		
+		
 		userName.setBounds(40, 40, 200, 40);
 		password.setBounds(40, 120, 200, 40);
+		jPanel1.setBounds(280, -20, 200, 240);
+		jPanel1.setVisible(true);
 		submit.setBounds(60, 180, 160, 40);
-		submit.setText("Submit");
-		submit.setUI(new MyButtonUI(submit));
+		submit.setText("Войти");
+		// submit.setUI(new MyButtonUI(submit));
+		MyButtonUI.setupButtonUI(submit, 0);
+		MyButtonUI.setupButtonUI(registr, 0);
+		centerPanel.add(labelForUser);
+		centerPanel.add(labelForPass);
 		centerPanel.add(userName);
 		centerPanel.add(password);
+		centerPanel.add(jPanel1);
 		submit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				submitActionPerformed(evt);
@@ -53,28 +101,32 @@ public class Enterance extends javax.swing.JFrame {
 		});
 		centerPanel.add(submit);
 		registr.setBounds(260, 180, 160, 40);
-		registr.setText("Registr");
+		registr.setText("Регистрация");
 		registr.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				registrActionPerformed(evt);
 			}
 		});
 		centerPanel.add(registr);
+
+		//getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 		pack();
-//		try {
-//			// меняем
-//			//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//			//
-//			// попробуй еще так
-//			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-//			// или так
-//			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-//			//
-//			// обновляем дерево компонентов
-//			SwingUtilities.updateComponentTreeUI(this);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// // меняем
+		// //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		// //
+		// // попробуй еще так
+		// //
+		// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+		// // или так
+		// //
+		// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		// //
+		// // обновляем дерево компонентов
+		// SwingUtilities.updateComponentTreeUI(this);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	private javax.swing.JPanel centerPanel;
@@ -82,6 +134,9 @@ public class Enterance extends javax.swing.JFrame {
 	private javax.swing.JPasswordField password;
 	private javax.swing.JButton submit;
 	private javax.swing.JButton registr;
+	private JLabel jPanel1;
+	private JLabel labelForUser;
+	private JLabel labelForPass;
 
 	private void submitActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
@@ -126,6 +181,9 @@ public class Enterance extends javax.swing.JFrame {
 					JOptionPane
 							.showMessageDialog(rootPane,
 									"Вы ввели неверный username, повторите пожалуйста ввод");
+					CustomDialog.showTooltipWindow(userName);
+					userName.setBorder(BorderFactory
+							.createLineBorder(Color.RED));
 				}
 			} else {
 				JOptionPane
@@ -140,7 +198,7 @@ public class Enterance extends javax.swing.JFrame {
 	private void registrActionPerformed(java.awt.event.ActionEvent evt) {
 		reg = new Registry();
 		reg.setVisible(true);
-		reg.setSize(500, 320);
+		reg.setSize(500, 360);
 		reg.setLocationRelativeTo(null);
 	}
 
@@ -148,4 +206,5 @@ public class Enterance extends javax.swing.JFrame {
 		reg.setVisible(false);
 		JOptionPane.showMessageDialog(rootPane, "false");
 	}
+	
 }
