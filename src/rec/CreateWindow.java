@@ -2,11 +2,12 @@ package rec;
 
 import javax.swing.JFrame;
 
+import LookAndFeel.SplashScreen;
+
 public class CreateWindow {
 
 	Enterance frame = null;
 	public CreateWindow() {
-		
 		frame = new Enterance();
 		frame.setSize(500, 320);
 		frame.setLocationRelativeTo(null);

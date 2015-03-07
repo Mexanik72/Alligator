@@ -43,7 +43,7 @@ public class Registry extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Alligator:Registry");
 
-		setContentPane(new Fon());
+		setContentPane(new Fon("src/Images/texture.jpg"));
 		Container centerPanel = getContentPane();
 		
 		centerPanel.setLayout(null);

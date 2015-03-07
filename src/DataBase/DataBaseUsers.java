@@ -57,7 +57,7 @@ public class DataBaseUsers {
 		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
-		PreparedStatement st = con.prepareStatement("Select id, name, password, score "
+		PreparedStatement st = con.prepareStatement("Select id, name, password, score, img "
 				+ "From users " + "Where username = ?");
 		// Указание значений параметров запроса
 		st.setString(1, username);
@@ -72,7 +72,7 @@ public class DataBaseUsers {
 			// формируем новый объект Product
 			// и помещаем его в коллекцию
 			users = new User(rs.getInt(1), rs.getString(2), username,
-					rs.getString(3),rs.getInt(4));
+					rs.getString(3),rs.getInt(4),rs.getString(5));
 			//users.add(user);
 		}
 		// Закрываем выборку и соединение с БД
@@ -87,7 +87,7 @@ public class DataBaseUsers {
 		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
-		PreparedStatement st = con.prepareStatement("Select name, username, password, score "
+		PreparedStatement st = con.prepareStatement("Select name, username, password, score, img "
 				+ "From users " + "Where id = ?");
 		// Указание значений параметров запроса
 		st.setInt(1, id);
@@ -102,7 +102,7 @@ public class DataBaseUsers {
 			// формируем новый объект Product
 			// и помещаем его в коллекцию
 			user = new User(id, rs.getString(1), rs.getString(2),
-					rs.getString(3),rs.getInt(4));
+					rs.getString(3),rs.getInt(4), rs.getString(5));
 			users.add(user);
 		}
 		// Закрываем выборку и соединение с БД
@@ -127,6 +127,24 @@ public class DataBaseUsers {
 		// Выполнение запроса
 		st.executeUpdate();
 
+		con.close();
+	}
+	
+	public void setImg(int id, String img) throws Exception {
+		// Получение соединения с БД
+		Connection con = GetConnection.getConnection();
+		
+		// Подготовка SQL-запроса
+		PreparedStatement st = con.prepareStatement(
+				"Update users " +
+				"Set img=?" +
+				"Where id=?");
+		// Указание значений параметров запроса		
+		
+		st.setInt(2, id);
+		st.setString(1, img);
+		// Выполнение запроса
+		st.executeUpdate();
 		con.close();
 	}
 }

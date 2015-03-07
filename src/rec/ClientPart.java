@@ -14,15 +14,14 @@ public class ClientPart {
  
     Socket socket;
     File selectFile;
+    int port = 2154;
+    String addres = "127.0.0.1";
     ClientPart(){
                 
           
     }
     
     void sendFile(File selectedFile){
-        //----------------------------------------------
-        int port = 2154;
-        String addres = "127.0.0.1";
         InetAddress ipAddress = null;
         try {
             ipAddress = InetAddress.getByName(addres);
