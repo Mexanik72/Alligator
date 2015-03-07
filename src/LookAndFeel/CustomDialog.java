@@ -65,7 +65,7 @@ public class CustomDialog {
 				Graphics2D g2d = (Graphics2D) g;
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
-			
+
 				g2d.setComposite(AlphaComposite.getInstance(
 						AlphaComposite.SRC_OVER, opacity));
 
@@ -103,14 +103,19 @@ public class CustomDialog {
 
 		switch (type) {
 		case 1:
-			contentPanel.add(new JLabel("<html>wrong<br>"
-					+ "<font color=gray size=8px>user</font></html>"),
+			contentPanel.add(new JLabel("<html>Вы ввели неверный логин <br>"
+					+ "<font color=gray size=8px>повторите пожалуйста вход или зарегестрируйтесь</font></html>"),
 					BorderLayout.CENTER);
 			break;
 		case 2:
 			contentPanel.add(new JLabel("<html>" + word.getWord() + "<br>"
 					+ "<font color=gray size=8px>" + word.getDescription()
 					+ "</font></html>"), BorderLayout.CENTER);
+			break;
+		case 3:
+			contentPanel.add(new JLabel("<html>Вы ввели неверный пароль<br>"
+					+ "<font color=gray size=8px>повторите пожалуйста вход или зарегестрируйтесь</font></html>"),
+					BorderLayout.CENTER);
 			break;
 		}
 		// contentPanel.add ( new JLabel ( "<html>wrong<br>" +
