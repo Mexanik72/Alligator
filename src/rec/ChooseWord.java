@@ -1,47 +1,47 @@
 package rec;
 
-import java.awt.Container;
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.awt.Insets;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
+import CustomClass.Categories;
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseWord;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import LookAndFeel.ContentPanel;
+import LookAndFeel.MyButtonUI;
+import LookAndFeel.SimpleMenu;
+import LookAndFeel.SplashScreen;
 
 public class ChooseWord extends javax.swing.JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private User userNow;
+	private Categories categoryNow;
 	private ArrayList<String> Words;
 	private Word WordFull;
 	private Word wordNow;
 	public DataBaseWord dw;
 	private String Star32 = "src/Images/forWords/Star32.png";
 	private String Star322 = "src/Images/forWords/Star322.png";
-	
-	
-	public ChooseWord(User user) {
+	int i = 0, j = 0;
+
+	public ChooseWord(User user, Categories category) {
 		this.userNow = user;
+		this.categoryNow = category;
 		DataBaseWord dw = new DataBaseWord();
 		try {
-			Words = (ArrayList<String>) dw.getWords();
+			Words = (ArrayList<String>) dw.getWordsWhereC(categoryNow.getId());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,94 +65,87 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		button3 = new JButton();
 		button4 = new JButton();
 
-		int i = 0, j = 0;	
-
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		centerPanel.setLayout(new GridLayout(2, 2, 50, 50));
+		centerPanel.setLayout(new GridLayout(2, 2, 10, 10));
 
-		button1.setSize(100, 40);
-		button1.setLayout(null);
-
-		
-		button1.setText("<html> " + Words.get(i = random())+ "<p>"
-				 + "</html>" );
-		rate(button1, i);
-		Words.remove(i);
-		button1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String text = button1.getText();
-				buttonActionPerformed(text);
-			}
-		});
+		defineB(button1);
 		centerPanel.add(button1);
 
-		button2.setSize(100, 40);
-		button2.setText("<html> " +Words.get(i = random())+ "<p>"
-				 + "</html>");
-		rate(button2, i);
-		Words.remove(i);
-		button2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String text = button2.getText();
-				buttonActionPerformed(text);
-			}
-		});
+		defineB(button2);
 		centerPanel.add(button2);
 
-		button3.setSize(100, 40);
-		button3.setText(Words.get(i = random()));
-		rate(button3, i);
-		Words.remove(i);
-		button3.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String text = button3.getText();
-				buttonActionPerformed(text);
-			}
-		});
+		defineB(button3);
 		centerPanel.add(button3);
 
-		button4.setSize(100, 40);
-		button4.setText(Words.get(i = random()));
-		rate(button4, i);
-		Words.remove(i);
-		button4.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String text = button4.getText();
-				buttonActionPerformed(text);
-			}
-		});
+		defineB(button4);
 		centerPanel.add(button4);
-
-		add(centerPanel, java.awt.BorderLayout.CENTER);
-
+		ContentPanel pa = new ContentPanel();
+		pa.setLayout(new BorderLayout());
+		pa.add(centerPanel, java.awt.BorderLayout.CENTER);
+		centerPanel.setOpaque(false);
 		northPanel.setLayout(new java.awt.BorderLayout());
-
+		northPanel.setOpaque(false);
 		hiLabel.setText("Hi, " + userNow.getName()
 				+ ", please, choose 1 of the buttons");
-		northPanel.add(hiLabel);
-		add(northPanel, java.awt.BorderLayout.NORTH);
-
+		northPanel.add(hiLabel, java.awt.BorderLayout.WEST);
+		SimpleMenu sm = new SimpleMenu(userNow);
+		northPanel.add(sm, java.awt.BorderLayout.EAST);
+		pa.add(northPanel, java.awt.BorderLayout.NORTH);
+		southPanel.setOpaque(false);
 		southPanel.setLayout(new java.awt.BorderLayout());
-		add(southPanel, java.awt.BorderLayout.SOUTH);
+		pa.add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		setTitle("ChooseWord");
 		setSize(350, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		add(pa);
 	}
 
 	private int random() {
 		return (int) (Math.random() * Words.size());
 	}
-	
-	private void rate(JButton button1, int in ) {
-		button1.setLayout(null);
+
+	private void defineB(final JButton button) {
+		button.setSize(100, 40);
+		button.setLayout(null);
+		i = random();
+		rate(button, i);
+
+		button.setBorderPainted(false);
+		button.setFocusPainted(false);
+		button.setContentAreaFilled(false);
+		button.setIcon(new ImageIcon("src/Images/forWords/"+ categoryNow.getName() + "/" + wordNow.getImg()));
+		
+		final String str = wordNow.getWord();
+		
+		button.setText("<html><body><h1 align='center'>" + str
+				+ "</h1><br><p aligin='center'>" + wordNow.getDescription()
+				+ "</p></body></html>");
+
+		button.setVerticalAlignment(SwingConstants.CENTER);
+		// button1.setHorizontalAlignment(SwingConstants.RIGHT);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		button.setVerticalTextPosition(SwingConstants.TOP);
+		button.setMargin(new Insets(10, 10, 10, 10));
+		button.setIconTextGap(20);
+		Words.remove(i);
+
+		button.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				buttonActionPerformed(str);
+			}
+		});
+		MyButtonUI.setupButtonUI(button, 0, 3);
+	}
+
+	private void rate(JButton button1, int in) {
+		button1.setLayout(new FlowLayout());
 		int i = 0, j = 0;
 		DataBaseWord dw = new DataBaseWord();
 		try {
 			wordNow = dw.getIdByWords(Words.get(in));
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		i = wordNow.getRate();
@@ -167,9 +160,9 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 				button1.add(labels[j]);
 				i = i - 2;
 				j++;
-			} 
-			if(i == 1) {
-			labels[j] = new JLabel();
+			}
+			if (i == 1) {
+				labels[j] = new JLabel();
 				labels[j].setBounds(x, y, width, height);
 				x = x + 32;
 				labels[j].setIcon(new ImageIcon(Star322));
@@ -189,11 +182,8 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 	private javax.swing.JButton button4;
 	private javax.swing.JLabel hiLabel;
 
-	@SuppressWarnings("deprecation")
 	private void buttonActionPerformed(String text) {
 
-		Thread thread = new Thread(new ChooseWord());
-		thread.start();
 		this.dispose();
 
 		camDataSource dataSource = new camDataSource();
@@ -212,14 +202,13 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		rn.setLocationRelativeTo(null);
 
 		rn.setVisible(true);
-		thread.interrupt();
 
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		System.out.println("hello");
-		new Gif();
+		new SplashScreen();
 	}
+	
 }

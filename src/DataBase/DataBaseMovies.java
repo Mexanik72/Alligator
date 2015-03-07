@@ -37,12 +37,14 @@ public class DataBaseMovies {
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Insert into movies"
-				+ "(pathtomovie, owner, name) " + "values (?, ?, ?)");
+				+ "(pathtomovie, owner, name, word, date) " + "values (?, ?, ?, ?, ?)");
 		// Указание значений параметров запроса
 
 		st.setString(1, movie.getpathtomovie());
 		st.setInt(2, movie.getOwner());
 		st.setString(3, movie.getName());
+		st.setInt(4, movie.getWord());
+		st.setDate(5, movie.getDate());
 
 		// Выполнение запроса
 		st.executeUpdate();

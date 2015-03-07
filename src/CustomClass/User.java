@@ -7,13 +7,15 @@ public class User {
 	private String username;
 	private String password;
 	private int score;
+	private String img;
 
-	public User(int id, String name, String username, String password, int score) {
+	public User(int id, String name, String username, String password, int score, String img) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.score = score;
+		this.img = img;
 	}
 
 	public User() {
@@ -59,4 +61,13 @@ public class User {
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 }
+

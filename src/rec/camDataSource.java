@@ -3,10 +3,13 @@ package rec;
 import java.io.*;
 import java.util.*;
 import java.awt.Component;
+
 import javax.swing.JOptionPane;
 import javax.media.*;
 import javax.media.protocol.*;
 import javax.media.format.VideoFormat;
+
+import LookAndFeel.SplashScreen;
 
 public class camDataSource {
 
@@ -25,9 +28,11 @@ public class camDataSource {
 	}
 
 	public void setMainSource() {
+		
 		setProcessing(false);
 		VideoFormat vidformat = new VideoFormat(VideoFormat.YUV);
 		Vector devices = CaptureDeviceManager.getDeviceList(vidformat);
+		
 		CaptureDeviceInfo di = null;
 
 		if (devices.size() > 0)
@@ -47,6 +52,7 @@ public class camDataSource {
 					+ e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+		
 	}
 
 	public void makeDataSourceCloneable() {

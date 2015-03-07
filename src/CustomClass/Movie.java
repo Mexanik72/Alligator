@@ -1,16 +1,22 @@
 package CustomClass;
 
+import java.sql.Date;
+
 public class Movie {
 	private int id;
 	private String pathtomovie;
 	private int owner;
 	private String name;
+	private int word;
+	private Date date;
 
-	public Movie(int id, String pathtomovie, int owner, String name) {
+	public Movie(int id, String pathtomovie, int owner, String name, int word, Date date) {
 		this.id = id;
 		this.pathtomovie = pathtomovie;
 		this.owner = owner;
 		this.name = name;
+		this.word = word;
+		this.date = date;
 	}
 
 	public Movie() {
@@ -47,5 +53,21 @@ public class Movie {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getWord() {
+		return word;
+	}
+
+	public void setWord(int word) {
+		this.word = word;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -56,10 +57,10 @@ public class Enterance extends javax.swing.JFrame {
 		labelForUser = new JLabel();
 		labelForPass = new JLabel();
 		
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Alligator:Enterance");
 		
-		setContentPane(new Fon());
+		setContentPane(new Fon("src/Images/texture.jpg"));
 		Container centerPanel = getContentPane();
 		
 		centerPanel.setLayout(null);
@@ -87,8 +88,8 @@ public class Enterance extends javax.swing.JFrame {
 		submit.setBounds(60, 180, 160, 40);
 		submit.setText("Войти");
 		// submit.setUI(new MyButtonUI(submit));
-		MyButtonUI.setupButtonUI(submit, 0);
-		MyButtonUI.setupButtonUI(registr, 0);
+		MyButtonUI.setupButtonUI(submit, 0, 1);
+		MyButtonUI.setupButtonUI(registr, 0, 1);
 		centerPanel.add(labelForUser);
 		centerPanel.add(labelForPass);
 		centerPanel.add(userName);
@@ -108,7 +109,6 @@ public class Enterance extends javax.swing.JFrame {
 			}
 		});
 		centerPanel.add(registr);
-
 		//getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 		pack();
 		// try {
@@ -178,10 +178,11 @@ public class Enterance extends javax.swing.JFrame {
 					}
 				}
 				if (FlagWrongUser == false) {
-					JOptionPane
-							.showMessageDialog(rootPane,
-									"Вы ввели неверный username, повторите пожалуйста ввод");
-					CustomDialog.showTooltipWindow(userName);
+//					JOptionPane
+//							.showMessageDialog(rootPane,
+//									"Вы ввели неверный username, повторите пожалуйста ввод");
+					CustomDialog.showTooltipWindow(userName, 1, null);
+					
 					userName.setBorder(BorderFactory
 							.createLineBorder(Color.RED));
 				}
