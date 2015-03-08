@@ -108,7 +108,7 @@ public class PlayVideo extends JFrame {
 		player.addControllerListener(listener);
 		player.start();
 		getContentPane().remove(button);
-		JTextField crocoText = new HintTextField("Guess who?");
+		JTextField crocoText = new HintTextField("Guess what?");
 		contentPane.add(crocoText, BorderLayout.NORTH);
 	}
 }

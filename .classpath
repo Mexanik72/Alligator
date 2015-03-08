@@ -2,12 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/customizer.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/jmf.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/mediaplayer.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/multiplayer.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/sound.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/ojdbc7.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/postgresql-9.3-1102.jdbc41.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/ojdbc7.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files (x86)/JMF2.1.1e/lib/postgresql-9.3-1102.jdbc41.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files (x86)/Java/jre1.8.0_31/lib/ext/jmf.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
