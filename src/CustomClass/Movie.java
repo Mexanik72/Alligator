@@ -4,19 +4,17 @@ import java.sql.Date;
 
 public class Movie {
 	private int id;
-	private String pathtomovie;
 	private int owner;
 	private String name;
 	private int word;
-	private Date date;
+	private int category;
 
-	public Movie(int id, String pathtomovie, int owner, String name, int word, Date date) {
+	public Movie(int id, int owner, String name, int word, int category) {
 		this.id = id;
-		this.pathtomovie = pathtomovie;
 		this.owner = owner;
 		this.name = name;
 		this.word = word;
-		this.date = date;
+		this.category = category;
 	}
 
 	public Movie() {
@@ -29,14 +27,6 @@ public class Movie {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getpathtomovie() {
-		return pathtomovie;
-	}
-
-	public void setpathtomovie(String pathtomovie) {
-		this.pathtomovie = pathtomovie;
 	}
 
 	public int getOwner() {
@@ -63,11 +53,11 @@ public class Movie {
 		this.word = word;
 	}
 	
-	public Date getDate() {
-		return date;
+	public int getCategory() {
+		return category;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCategory(int category) {
+		this.category = category;
 	}
 }
