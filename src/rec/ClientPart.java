@@ -106,6 +106,7 @@ public class ClientPart {
 			byte[] buffer = new byte[64 * 1024];
 			FileOutputStream outF = new FileOutputStream(path);
 			int count, total = 0;
+			
 			while ((count = dis.read(buffer)) != -1) {
 				total += count;
 				outF.write(buffer, 0, count);
