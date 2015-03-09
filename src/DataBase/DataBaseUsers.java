@@ -10,16 +10,11 @@ import java.util.List;
 import CustomClass.User;
 
 public class DataBaseUsers {
-	private Connection getConnection() throws Exception {
-		Class.forName("org.postgresql.Driver").newInstance();
-		String url = "jdbc:postgresql://localhost/alig";
-		return DriverManager.getConnection(url, "postgres", "toor123");
-	}
 
 	public List<Integer> getUsersIds() throws Exception {
 		List<Integer> usersIds = new ArrayList<Integer>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -39,7 +34,7 @@ public class DataBaseUsers {
 	public List<String> getUsersNames() throws Exception {
 		List<String> usersNames = new ArrayList<String>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Выполнение SQL-запроса
 		ResultSet rs = con.createStatement().executeQuery(
@@ -59,10 +54,10 @@ public class DataBaseUsers {
 	public User getUserByUsername(String username) throws Exception {
 		User users = new User();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
-		PreparedStatement st = con.prepareStatement("Select id, name, password, score "
+		PreparedStatement st = con.prepareStatement("Select id, name, password, score, img "
 				+ "From users " + "Where username = ?");
 		// Указание значений параметров запроса
 		st.setString(1, username);
@@ -77,7 +72,7 @@ public class DataBaseUsers {
 			// формируем новый объект Product
 			// и помещаем его в коллекцию
 			users = new User(rs.getInt(1), rs.getString(2), username,
-					rs.getString(3),rs.getInt(4));
+					rs.getString(3),rs.getInt(4),rs.getString(5));
 			//users.add(user);
 		}
 		// Закрываем выборку и соединение с БД
@@ -89,10 +84,10 @@ public class DataBaseUsers {
 	public List<User> getUserById(int id) throws Exception {
 		List<User> users = new ArrayList<User>();
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
-		PreparedStatement st = con.prepareStatement("Select name, username, password, score "
+		PreparedStatement st = con.prepareStatement("Select name, username, password, score, img "
 				+ "From users " + "Where id = ?");
 		// Указание значений параметров запроса
 		st.setInt(1, id);
@@ -107,7 +102,7 @@ public class DataBaseUsers {
 			// формируем новый объект Product
 			// и помещаем его в коллекцию
 			user = new User(id, rs.getString(1), rs.getString(2),
-					rs.getString(3),rs.getInt(4));
+					rs.getString(3),rs.getInt(4), rs.getString(5));
 			users.add(user);
 		}
 		// Закрываем выборку и соединение с БД
@@ -118,7 +113,7 @@ public class DataBaseUsers {
 	
 	public void addUser(User user) throws Exception {
 		// Получение соединения с БД
-		Connection con = getConnection();
+		Connection con = GetConnection.getConnection();
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Insert into users"
@@ -132,6 +127,24 @@ public class DataBaseUsers {
 		// Выполнение запроса
 		st.executeUpdate();
 
+		con.close();
+	}
+	
+	public void setImg(int id, String img) throws Exception {
+		// Получение соединения с БД
+		Connection con = GetConnection.getConnection();
+		
+		// Подготовка SQL-запроса
+		PreparedStatement st = con.prepareStatement(
+				"Update users " +
+				"Set img=?" +
+				"Where id=?");
+		// Указание значений параметров запроса		
+		
+		st.setInt(2, id);
+		st.setString(1, img);
+		// Выполнение запроса
+		st.executeUpdate();
 		con.close();
 	}
 }

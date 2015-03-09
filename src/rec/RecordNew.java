@@ -2,6 +2,9 @@ package rec;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,6 +32,10 @@ import CustomClass.Movie;
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseMovies;
+import LookAndFeel.CustomDialog;
+import LookAndFeel.MyButtonUI;
+import LookAndFeel.SimpleMenu;
+import LookAndFeel.SplashScreen;
 
 public class RecordNew extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +59,8 @@ public class RecordNew extends javax.swing.JFrame {
 		this.userNow = user;
 		this.wordNow = word;
 
+		
+		
 		camSource = dataSource.cloneCamSource();
 		try {
 			UIManager.setLookAndFeel(UIManager
@@ -146,11 +155,43 @@ public class RecordNew extends javax.swing.JFrame {
 		northPanel.setLayout(new java.awt.BorderLayout());
 
 		messageLabel.setText(wordNow.getWord());
-		northPanel.add(messageLabel, java.awt.BorderLayout.CENTER);
+		northPanel.add(messageLabel, java.awt.BorderLayout.WEST);
+		messageLabel.addMouseListener(new MouseListener() {
+		
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				CustomDialog.showTooltipWindow(messageLabel, 2, wordNow);	
+			}
 
-		userLabel.setText(userNow.getUsername());
-		northPanel.add(userLabel, java.awt.BorderLayout.EAST);
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+		});
+		SimpleMenu sm = new SimpleMenu(userNow);
+		northPanel.add(sm, java.awt.BorderLayout.EAST);
+		
 		getContentPane().add(northPanel, java.awt.BorderLayout.NORTH);
 
 		southPanel.setLayout(new java.awt.BorderLayout());
@@ -162,12 +203,11 @@ public class RecordNew extends javax.swing.JFrame {
 			}
 		});
 
-		fileLabel.setText("File:");
-
 		southPanel.add(recordButton, java.awt.BorderLayout.EAST);
 		southPanel.add(fileLabel, java.awt.BorderLayout.WEST);
 		getContentPane().add(southPanel, java.awt.BorderLayout.SOUTH);
 
+		MyButtonUI.setupButtonUI(recordButton, 0, 1);
 		centerPanel.setLayout(new java.awt.BorderLayout());
 
 		getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
@@ -204,8 +244,7 @@ public class RecordNew extends javax.swing.JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			ClientPart cl = new ClientPart();
-			cl.sendFile(file);
+			ClientPart cl = new ClientPart(file);
 		}
 	}
 
@@ -284,6 +323,9 @@ public class RecordNew extends javax.swing.JFrame {
 					"IOException " + ex.getMessage(), "Error",
 					JOptionPane.WARNING_MESSAGE);
 		}
+		
+		
+		
 	}
 
 	public void stopRecording() {
@@ -298,6 +340,10 @@ public class RecordNew extends javax.swing.JFrame {
 					JOptionPane.WARNING_MESSAGE);
 		}
 
+	}
+	
+	public void showWord(Word word) {
+		
 	}
 
 	private javax.swing.JPanel centerPanel;

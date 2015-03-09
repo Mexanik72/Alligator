@@ -5,11 +5,17 @@ public class Word {
 	private int id;
 	private String word;
 	private int rate;
-
-	public Word(int id, String word, int rate) {
+	private String description;
+	private String img;
+	private int categor;
+	
+	public Word(int id, String word, int rate, String description, String img, int categor) {
 		this.id = id;
 		this.word = word;
 		this.rate = rate;
+		this.description = description;
+		this.img = img;
+		this.categor = categor;
 	}
 
 	public Word() {
@@ -38,5 +44,29 @@ public class Word {
 
 	public void setRate(int rate) {
 		this.rate = rate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
+	public int getCategor() {
+		return categor;
+	}
+
+	public void setCategor(int categor) {
+		this.categor = categor;
 	}
 }

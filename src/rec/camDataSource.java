@@ -3,10 +3,13 @@ package rec;
 import java.io.*;
 import java.util.*;
 import java.awt.Component;
+
 import javax.swing.JOptionPane;
 import javax.media.*;
 import javax.media.protocol.*;
 import javax.media.format.VideoFormat;
+
+import LookAndFeel.SplashScreen;
 
 public class camDataSource {
 
@@ -16,6 +19,8 @@ public class camDataSource {
 	private MediaLocator ml;
 	private Processor processor;
 	private boolean processing;
+	
+	public camDataSource() {}
 
 	public camDataSource(Component parent) {
 		this.parent = parent;
@@ -23,19 +28,21 @@ public class camDataSource {
 	}
 
 	public void setMainSource() {
+		
 		setProcessing(false);
 		VideoFormat vidformat = new VideoFormat(VideoFormat.YUV);
 		Vector devices = CaptureDeviceManager.getDeviceList(vidformat);
+		
 		CaptureDeviceInfo di = null;
 
-		if (devices.size() > 0)
-			di = (CaptureDeviceInfo) devices.elementAt(0);
-		else {
-			JOptionPane.showMessageDialog(parent,
-					"Your camera is not connected", "No webcam found",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
+//		if (devices.size() > 0)
+//			di = (CaptureDeviceInfo) devices.elementAt(0);
+//		else {
+//			JOptionPane.showMessageDialog(parent,
+//					"Your camera is not connected" , "No webcam found",
+//					JOptionPane.WARNING_MESSAGE);
+//			return;
+//		}
 
 		try {
 			ml = di.getLocator();
@@ -45,6 +52,7 @@ public class camDataSource {
 					+ e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+		
 	}
 
 	public void makeDataSourceCloneable() {
