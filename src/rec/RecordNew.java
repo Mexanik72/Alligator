@@ -2,19 +2,21 @@ package rec;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.FocusEvent;
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.media.CaptureDeviceInfo;
 import javax.media.Control;
 import javax.media.DataSink;
-import javax.media.Format;
 import javax.media.Manager;
 import javax.media.MediaLocator;
 import javax.media.NoDataSinkException;
@@ -23,7 +25,7 @@ import javax.media.Processor;
 import javax.media.format.VideoFormat;
 import javax.media.protocol.DataSource;
 import javax.media.protocol.FileTypeDescriptor;
-import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -35,7 +37,6 @@ import DataBase.DataBaseMovies;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.SimpleMenu;
-import LookAndFeel.SplashScreen;
 
 public class RecordNew extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +53,9 @@ public class RecordNew extends javax.swing.JFrame {
 	private User userNow;
 	private Word wordNow;
 	private List<Integer> ListIdmovies;
+	
+	private Timer timer = new Timer();
+	
 
 	public RecordNew(camDataSource dataSource, User user, Word word) {
 		this.dataSource = dataSource;
@@ -143,6 +147,7 @@ public class RecordNew extends javax.swing.JFrame {
 		fileLabel = new javax.swing.JLabel();
 		centerPanel = new javax.swing.JPanel();
 		userLabel = new javax.swing.JLabel();
+		timerLabel = new javax.swing.JLabel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("My Webcam");
@@ -204,7 +209,9 @@ public class RecordNew extends javax.swing.JFrame {
 		});
 
 		southPanel.add(recordButton, java.awt.BorderLayout.EAST);
-		southPanel.add(fileLabel, java.awt.BorderLayout.WEST);
+		southPanel.add(timerLabel, java.awt.BorderLayout.WEST);
+			
+		
 		getContentPane().add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		MyButtonUI.setupButtonUI(recordButton, 0, 1);
@@ -228,9 +235,11 @@ public class RecordNew extends javax.swing.JFrame {
 			}
 			file = new File(ListIdmovies.size()+1 + "_" + wordNow.getWord() + ".mov");
 			recordToFile(file);
+			new Timer().schedule(new GameTimer(), 10);
 			fileLabel.setText("File:" + file.toString());
 			recordButton.setText("Stop");
 		} else {
+<<<<<<< HEAD
 			stopRecording();
 			recordButton.setText("Record");
 			Movie mv = new Movie();
@@ -245,7 +254,30 @@ public class RecordNew extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 			ClientPart cl = new ClientPart(file);
+=======
+			stopAndSend();
+>>>>>>> master
 		}
+	}
+	
+	public void stopAndSend() {
+		stopRecording();
+		recordButton.setText("Record");
+		Movie mv = new Movie();
+		
+		DataBaseMovies db = new DataBaseMovies();
+		mv.setOwner(userNow.getId());
+		mv.setName(file.toString());
+		mv.setWord(wordNow.getId());
+		try {
+			db.addMovie(mv);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ClientPart cl = new ClientPart();
+		cl.sendFile(file);
+		this.dispose();
 	}
 
 	public void recordToFile(File file) {
@@ -353,6 +385,34 @@ public class RecordNew extends javax.swing.JFrame {
 	private javax.swing.JButton recordButton;
 	private javax.swing.JPanel southPanel;
 	private javax.swing.JLabel userLabel;
+	 private JLabel       timerLabel;
 	// End of variables declaration
 	CaptureDeviceInfo videoDevice = null;
+	
+	public class GameTimer extends TimerTask {
+        public void run() {
+            int seconds = 0, minutes = 0;
+            while (true) {
+                try {
+                  Thread.sleep(1000);
+                } catch (InterruptedException e){}
+              seconds++;
+              //if (minutes != 0)
+                  timerLabel.setText(Integer.toString(minutes) + " ì : " + Integer.toString(seconds) + " ñ");
+              if (seconds == 59) {
+                seconds = -1;
+                minutes++;
+            }
+              if (minutes == 1 && seconds == 30) {
+            	  stopAndSend();
+            	  
+            	  PlayOrCreate poc = new PlayOrCreate(userNow);
+					poc.setSize(720, 720);
+					poc.setLocationRelativeTo(null);
+					poc.setVisible(true);
+            	  break;
+              }
+          }
+      }
+}
 }

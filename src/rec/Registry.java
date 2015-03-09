@@ -106,10 +106,8 @@ public class Registry extends JFrame {
 
 	private void submitActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		userName.setBorder(BorderFactory
-				.createLineBorder(Color.WHITE));
-		password.setBorder(BorderFactory
-				.createLineBorder(Color.WHITE));
+		userName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		password.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		char s[] = password.getPassword();
 		String userNam = userName.getText();
 		String pass = new String(s);
@@ -132,15 +130,14 @@ public class Registry extends JFrame {
 				// .showMessageDialog(rootPane,
 				// "Вы ввели неверный username, повторите пожалуйста ввод");
 				CustomDialog.showTooltipWindow(userName, 1, null);
-				userName.setBorder(BorderFactory
-						.createLineBorder(Color.RED));
+				userName.setBorder(BorderFactory.createLineBorder(Color.RED));
 			}
-		} else
+		} else {
 			// JOptionPane.showMessageDialog(rootPane,
 			// "Вы ввели неверный пароль, повторите пожалуйста ввод");
 			CustomDialog.showTooltipWindow(password, 3, null);
-		password.setBorder(BorderFactory
-				.createLineBorder(Color.RED));
+			password.setBorder(BorderFactory.createLineBorder(Color.RED));
+		}
 	}
 
 }

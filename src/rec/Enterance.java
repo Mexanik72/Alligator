@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 import CustomClass.User;
 import DataBase.DataBaseUsers;
 import LookAndFeel.CustomDialog;
@@ -37,7 +39,7 @@ public class Enterance extends javax.swing.JFrame {
 		jPanel1 = new JLabel();
 		labelForUser = new JLabel();
 		labelForPass = new JLabel();
-
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Alligator:Enterance");
 
