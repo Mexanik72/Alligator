@@ -239,24 +239,7 @@ public class RecordNew extends javax.swing.JFrame {
 			fileLabel.setText("File:" + file.toString());
 			recordButton.setText("Stop");
 		} else {
-<<<<<<< HEAD
-			stopRecording();
-			recordButton.setText("Record");
-			Movie mv = new Movie();
-			DataBaseMovies db = new DataBaseMovies();
-			mv.setpathtomovie("C:\\movies");
-			mv.setOwner(userNow.getId());
-			mv.setName(file.toString());
-			try {
-				db.addMovie(mv);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			ClientPart cl = new ClientPart(file);
-=======
 			stopAndSend();
->>>>>>> master
 		}
 	}
 	
@@ -276,7 +259,6 @@ public class RecordNew extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		ClientPart cl = new ClientPart();
-		cl.sendFile(file);
 		this.dispose();
 	}
 

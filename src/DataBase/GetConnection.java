@@ -9,8 +9,8 @@ public class GetConnection {
 	public static Connection getConnection() {
 		try {
 			Class.forName("org.postgresql.Driver").newInstance();
-			String url = "jdbc:postgresql://localhost/alligator";
-			return DriverManager.getConnection(url, "postgres", "toor");
+			String url = "jdbc:postgresql://localhost/alig";
+			return DriverManager.getConnection(url, "postgres", "toor123");
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,
 					"Could not connect to database: " + ex.getMessage(),
