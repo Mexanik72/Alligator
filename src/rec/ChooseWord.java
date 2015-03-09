@@ -3,7 +3,11 @@ package rec;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.image.AreaAveragingScaleFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -107,6 +111,8 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 	}
 
 	private void defineB(final JButton button) {
+		Image img, averimg;
+		ImageObserver io;
 		button.setSize(100, 40);
 		button.setLayout(null);
 		i = random();

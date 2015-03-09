@@ -252,7 +252,6 @@ public class RecordNew extends javax.swing.JFrame {
 		mv.setOwner(userNow.getId());
 		mv.setName(file.toString());
 		mv.setWord(wordNow.getId());
-		mv.setCategory(wordNow.getCategor());
 		try {
 			db.addMovie(mv);
 		} catch (Exception e) {

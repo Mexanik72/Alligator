@@ -1,6 +1,7 @@
 package rec;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -53,17 +54,19 @@ public class PlayOrCreate extends JFrame{
 	}
 
 	private void playActionPerformed() {
-		PlayVideo pv = new PlayVideo(userNow);
+		new PlayVideo(userNow);
 		this.dispose();
 	}
 	
 	private void createActionPerformed() {
+		
 		ChooseCategory cw = new ChooseCategory(userNow);
 		cw.setSize(720, 720);
 		cw.setLocationRelativeTo(null);
 		cw.setVisible(true);
 		this.dispose();
 	}
+
 	
 	private javax.swing.JPanel centerPanel;
 	private javax.swing.JPanel northPanel;
