@@ -12,8 +12,6 @@ public class CreateWindow {
 		frame.setSize(500, 320);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
-
 	}
 
 	public static void main(String[] args) {

@@ -244,8 +244,7 @@ public class RecordNew extends javax.swing.JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			ClientPart cl = new ClientPart();
-			cl.sendFile(file);
+			ClientPart cl = new ClientPart(file);
 		}
 	}
 

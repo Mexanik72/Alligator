@@ -51,4 +51,20 @@ public class DataBaseMovies {
 
 		con.close();
 	}
+	
+	public String getPathByWord (int wordId) throws Exception {
+		Connection con = GetConnection.getConnection();
+		PreparedStatement st = con.prepareStatement("SELECT name FROM movies WHERE word = ?");
+		st.setInt(1, wordId);
+		ResultSet rs = st.executeQuery();
+		
+		while (rs.next()) {
+			String path = rs.getString(1);
+			return path;
+		}
+		
+		rs.close();
+		con.close();
+		return null;		
+	}
 }
