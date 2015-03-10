@@ -3,6 +3,8 @@ package rec;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -53,9 +55,8 @@ public class RecordNew extends javax.swing.JFrame {
 	private User userNow;
 	private Word wordNow;
 	private List<Integer> ListIdmovies;
-	
+
 	private Timer timer = new Timer();
-	
 
 	public RecordNew(camDataSource dataSource, User user, Word word) {
 		this.dataSource = dataSource;
@@ -63,8 +64,6 @@ public class RecordNew extends javax.swing.JFrame {
 		this.userNow = user;
 		this.wordNow = word;
 
-		
-		
 		camSource = dataSource.cloneCamSource();
 		try {
 			UIManager.setLookAndFeel(UIManager
@@ -162,41 +161,40 @@ public class RecordNew extends javax.swing.JFrame {
 		messageLabel.setText(wordNow.getWord());
 		northPanel.add(messageLabel, java.awt.BorderLayout.WEST);
 		messageLabel.addMouseListener(new MouseListener() {
-		
+
 			public void mouseEntered(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				CustomDialog.showTooltipWindow(messageLabel, 2, wordNow);	
+				CustomDialog.showTooltipWindow(messageLabel, 2, wordNow);
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
-			
 		});
 		SimpleMenu sm = new SimpleMenu(userNow);
 		northPanel.add(sm, java.awt.BorderLayout.EAST);
-		
+
 		getContentPane().add(northPanel, java.awt.BorderLayout.NORTH);
 
 		southPanel.setLayout(new java.awt.BorderLayout());
@@ -210,8 +208,7 @@ public class RecordNew extends javax.swing.JFrame {
 
 		southPanel.add(recordButton, java.awt.BorderLayout.EAST);
 		southPanel.add(timerLabel, java.awt.BorderLayout.WEST);
-			
-		
+
 		getContentPane().add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		MyButtonUI.setupButtonUI(recordButton, 0, 1);
@@ -233,7 +230,8 @@ public class RecordNew extends javax.swing.JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			file = new File(ListIdmovies.size()+1 + "_" + wordNow.getWord() + ".mov");
+			file = new File(ListIdmovies.size() + 1 + "_" + wordNow.getWord()
+					+ ".mov");
 			recordToFile(file);
 			new Timer().schedule(new GameTimer(), 10);
 			fileLabel.setText("File:" + file.toString());
@@ -242,12 +240,12 @@ public class RecordNew extends javax.swing.JFrame {
 			stopAndSend();
 		}
 	}
-	
+
 	public void stopAndSend() {
 		stopRecording();
 		recordButton.setText("Record");
 		Movie mv = new Movie();
-		
+
 		DataBaseMovies db = new DataBaseMovies();
 		mv.setOwner(userNow.getId());
 		mv.setName(file.toString());
@@ -337,9 +335,7 @@ public class RecordNew extends javax.swing.JFrame {
 					"IOException " + ex.getMessage(), "Error",
 					JOptionPane.WARNING_MESSAGE);
 		}
-		
-		
-		
+
 	}
 
 	public void stopRecording() {
@@ -355,9 +351,9 @@ public class RecordNew extends javax.swing.JFrame {
 		}
 
 	}
-	
+
 	public void showWord(Word word) {
-		
+
 	}
 
 	private javax.swing.JPanel centerPanel;
@@ -367,34 +363,36 @@ public class RecordNew extends javax.swing.JFrame {
 	private javax.swing.JButton recordButton;
 	private javax.swing.JPanel southPanel;
 	private javax.swing.JLabel userLabel;
-	 private JLabel       timerLabel;
+	private JLabel timerLabel;
 	// End of variables declaration
 	CaptureDeviceInfo videoDevice = null;
-	
+
 	public class GameTimer extends TimerTask {
-        public void run() {
-            int seconds = 0, minutes = 0;
-            while (true) {
-                try {
-                  Thread.sleep(1000);
-                } catch (InterruptedException e){}
-              seconds++;
-              //if (minutes != 0)
-                  timerLabel.setText(Integer.toString(minutes) + " ì : " + Integer.toString(seconds) + " ñ");
-              if (seconds == 59) {
-                seconds = -1;
-                minutes++;
-            }
-              if (minutes == 1 && seconds == 30) {
-            	  stopAndSend();
-            	  
-            	  PlayOrCreate poc = new PlayOrCreate(userNow);
-					poc.setSize(720, 720);
-					poc.setLocationRelativeTo(null);
-					poc.setVisible(true);
-            	  break;
-              }
-          }
-      }
-}
+		public void run() {
+			int seconds = 0, minutes = 0;
+			while (true) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+				seconds++;
+				// if (minutes != 0)
+				timerLabel.setText(Integer.toString(minutes) + " ì : "
+						+ Integer.toString(seconds) + " ñ");
+				if (seconds == 59) {
+					seconds = -1;
+					minutes++;
+				}
+				if (minutes == 1 && seconds == 30) {
+					stopAndSend();
+					Dimension d = new Dimension();
+					Point p;
+					p = getLocationOnScreen();
+					d.setSize(720, 720);
+					new PlayOrCreate(userNow, d, p);
+					break;
+				}
+			}
+		}
+	}
 }
