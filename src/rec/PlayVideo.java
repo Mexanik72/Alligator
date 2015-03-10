@@ -33,40 +33,50 @@ public class PlayVideo extends JFrame {
 	private Component center;
 	private Component south;
 	private User userNow;
-	private JFileChooser movieChooser;
+	//private JFileChooser movieChooser;
 	private JButton button;
 
 	public PlayVideo(User user) {
 
-		if (movieChooser == null)
-			movieChooser = new JFileChooser();
-		movieChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-		movieChooser.addChoosableFileFilter(new MOVFilter());
-		movieChooser.setAcceptAllFileFilterUsed(false);
-		movieChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//		if (movieChooser == null)
+//			movieChooser = new JFileChooser();
+//		movieChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+//		movieChooser.addChoosableFileFilter(new MOVFilter());
+//		movieChooser.setAcceptAllFileFilterUsed(false);
+//		movieChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		this.userNow = user;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		button = new JButton("Select File");
-		ActionListener listener = new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-
-				int status = movieChooser.showOpenDialog(PlayVideo.this);
-				if (status == JFileChooser.APPROVE_OPTION) {
-					File file = movieChooser.getSelectedFile();
-					if (!file.getName().endsWith(".mov")
-							&& !file.getName().endsWith(".MOV"))
-						file = new File(file.toString() + ".mov");
-					try {
-						load(file);
-					} catch (Exception e) {
-						System.err.println("Try again: " + e);
-					}
-				}
-			}
-		};
-		button.addActionListener(listener);
-		getContentPane().add(button, BorderLayout.NORTH);
+//		button = new JButton("Select File");
+//		ActionListener listener = new ActionListener() {
+//			public void actionPerformed(ActionEvent event) {
+//
+//				int status = movieChooser.showOpenDialog(PlayVideo.this);
+//				if (status == JFileChooser.APPROVE_OPTION) {
+//					File file = movieChooser.getSelectedFile();
+//					if (!file.getName().endsWith(".mov")
+//							&& !file.getName().endsWith(".MOV"))
+//						file = new File(file.toString() + ".mov");
+//					try {
+//						load(file);
+//					} catch (Exception e) {
+//						System.err.println("Try again: " + e);
+//					}
+//				}
+//			}
+//		};
+//		button.addActionListener(listener);
+//		getContentPane().add(button, BorderLayout.NORTH);
+		int category = 2;
+		ClientPart cl = new ClientPart();
+		String path = cl.getVideo(category);
+		File file = new File(path);
+		try {
+			load(file);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		pack();
 		show();
 	}
@@ -107,8 +117,7 @@ public class PlayVideo extends JFrame {
 		};
 		player.addControllerListener(listener);
 		player.start();
-		getContentPane().remove(button);
-		JTextField crocoText = new HintTextField("Guess who?");
+		JTextField crocoText = new HintTextField("Guess what?");
 		contentPane.add(crocoText, BorderLayout.NORTH);
 	}
 }

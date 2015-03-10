@@ -1,7 +1,6 @@
 package rec;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -14,13 +13,14 @@ import javax.swing.JPanel;
 
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
+import LookAndFeel.RoundButton;
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseWord;
 import LookAndFeel.SimpleMenu;
 
 public class ChooseCategory extends javax.swing.JFrame {
-	
+
 	/**
 	 * 
 	 */
@@ -43,7 +43,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 		}
 		initComponents();
 	}
-	
+
 	private void initComponents() {
 
 		centerPanel = new JPanel();
@@ -51,22 +51,34 @@ public class ChooseCategory extends javax.swing.JFrame {
 		southPanel = new JPanel();
 		hiLabel = new JLabel();
 		
+		setSize(720, 720);
+		setLocationRelativeTo(null);
+		setVisible(true);
+
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		centerPanel.setLayout(new GridLayout(10, 1, 10, 10));
-		
-		for(int i=0;i<8;i++) {
+
+		for (int i = 0; i < 8; i++) {
 			final JButton butt = new JButton(Categories.get(i));
-			butt.setIcon(new ImageIcon("src/Images/forWords/" + Categories.get(i) + ".png"));
-			
+			butt.setIcon(new ImageIcon("src/Images/forWords/"
+					+ Categories.get(i) + ".png"));
+
 			centerPanel.add(butt);
 			butt.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				buttonActionPerformed(butt.getText());
-			}
-		});
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					buttonActionPerformed(butt.getText());
+				}
+			});
 			MyButtonUI.setupButtonUI(butt, 0, 3);
 		}
-		
+
+		JButton RoundButton = new RoundButton();
+		RoundButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				BackActionPerformed();
+			}
+		});
+
 		ContentPanel pa = new ContentPanel();
 		pa.setLayout(new BorderLayout());
 		pa.add(centerPanel, java.awt.BorderLayout.CENTER);
@@ -75,7 +87,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 		northPanel.setOpaque(false);
 		hiLabel.setText("Hi, " + userNow.getName()
 				+ ", please, choose 1 of the buttons");
-		northPanel.add(hiLabel, java.awt.BorderLayout.WEST);
+		northPanel.add(RoundButton, java.awt.BorderLayout.WEST);
 		SimpleMenu sm = new SimpleMenu(userNow);
 		northPanel.add(sm, java.awt.BorderLayout.EAST);
 		pa.add(northPanel, java.awt.BorderLayout.NORTH);
@@ -84,12 +96,17 @@ public class ChooseCategory extends javax.swing.JFrame {
 		pa.add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		setTitle("ChooseCategories");
-		setSize(350, 300);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		add(pa);
 	}
-	
+
+	void BackActionPerformed() {
+		new PlayOrCreate(userNow);
+		this.dispose();
+	}
+
 	void buttonActionPerformed(String str) {
 		this.dispose();
 		try {
@@ -106,9 +123,10 @@ public class ChooseCategory extends javax.swing.JFrame {
 		rn.setVisible(true);
 
 	}
-	
+
 	private javax.swing.JPanel centerPanel;
 	private javax.swing.JPanel northPanel;
 	private javax.swing.JPanel southPanel;
 	private javax.swing.JLabel hiLabel;
+
 }

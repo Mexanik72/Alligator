@@ -24,6 +24,7 @@ import CustomClass.Word;
 import DataBase.DataBaseWord;
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
+import LookAndFeel.RoundButton;
 import LookAndFeel.SimpleMenu;
 import LookAndFeel.SplashScreen;
 
@@ -83,6 +84,14 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 
 		defineB(button4);
 		centerPanel.add(button4);
+		
+		JButton RoundButton = new RoundButton();
+		RoundButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				BackActionPerformed();
+			}
+		});
+		
 		ContentPanel pa = new ContentPanel();
 		pa.setLayout(new BorderLayout());
 		pa.add(centerPanel, java.awt.BorderLayout.CENTER);
@@ -91,7 +100,7 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		northPanel.setOpaque(false);
 		hiLabel.setText("Hi, " + userNow.getName()
 				+ ", please, choose 1 of the buttons");
-		northPanel.add(hiLabel, java.awt.BorderLayout.WEST);
+		northPanel.add(RoundButton, java.awt.BorderLayout.WEST);
 		SimpleMenu sm = new SimpleMenu(userNow);
 		northPanel.add(sm, java.awt.BorderLayout.EAST);
 		pa.add(northPanel, java.awt.BorderLayout.NORTH);
@@ -104,6 +113,11 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		add(pa);
+	}
+	
+	void BackActionPerformed() {
+		new ChooseCategory(userNow);
+		this.dispose();
 	}
 
 	private int random() {

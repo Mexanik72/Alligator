@@ -148,10 +148,8 @@ public class Enterance extends javax.swing.JFrame {
 						}
 						if (User.getPassword().equals(pass)) {
 							FlagWrongUser = true;
-							PlayOrCreate poc = new PlayOrCreate(User);
-							poc.setSize(720, 720);
-							poc.setLocationRelativeTo(null);
-							poc.setVisible(true);
+							new PlayOrCreate(User);
+							
 							this.dispose();
 						} else {
 							// JOptionPane

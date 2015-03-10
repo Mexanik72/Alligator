@@ -37,17 +37,32 @@ public class DataBaseMovies {
 
 		// Подготовка SQL-запроса
 		PreparedStatement st = con.prepareStatement("Insert into movies"
-				+ "(owner, name, word, category) " + "values ( ?, ?, ?, ?)");
+				+ "(owner, name, word) " + "values ( ?, ?, ?)");
 		// Указание значений параметров запроса
 
 		st.setInt(1, movie.getOwner());
 		st.setString(2, movie.getName());
 		st.setInt(3, movie.getWord());
-		st.setInt(4, movie.getCategory());
 
 		// Выполнение запроса
 		st.executeUpdate();
 
 		con.close();
+	}
+	
+	public String getPathByWord (int wordId) throws Exception {
+		Connection con = GetConnection.getConnection();
+		PreparedStatement st = con.prepareStatement("SELECT name FROM movies WHERE word = ?");
+		st.setInt(1, wordId);
+		ResultSet rs = st.executeQuery();
+		
+		while (rs.next()) {
+			String path = rs.getString(1);
+			return path;
+		}
+		
+		rs.close();
+		con.close();
+		return null;		
 	}
 }

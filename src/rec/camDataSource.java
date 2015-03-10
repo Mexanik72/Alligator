@@ -35,14 +35,14 @@ public class camDataSource {
 		
 		CaptureDeviceInfo di = null;
 
-		if (devices.size() > 0)
-			di = (CaptureDeviceInfo) devices.elementAt(0);
-		else {
-			JOptionPane.showMessageDialog(parent,
-					"Your camera is not connected", "No webcam found",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
+//		if (devices.size() > 0)
+//			di = (CaptureDeviceInfo) devices.elementAt(0);
+//		else {
+//			JOptionPane.showMessageDialog(parent,
+//					"Your camera is not connected" , "No webcam found",
+//					JOptionPane.WARNING_MESSAGE);
+//			return;
+//		}
 
 		try {
 			ml = di.getLocator();

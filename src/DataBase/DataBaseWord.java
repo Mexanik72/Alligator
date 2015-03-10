@@ -168,6 +168,22 @@ public class DataBaseWord {
 
 		con.close();
 	}
+	
+	public List<Integer> getIdByCategories (int category) throws Exception {
+		List<Integer> words = new ArrayList<Integer>();
+		Connection con = GetConnection.getConnection();
+		PreparedStatement st = con.prepareStatement("SELECT id FROM words WHERE categor = ?");
+		st.setInt(1, category);
+		ResultSet rs = st.executeQuery();
+		
+		while (rs.next()) {
+			words.add(rs.getInt(1));
+		}
+		
+		rs.close();
+		con.close();
+		return words;
+	}
 
 	public int getCount() throws Exception {
 

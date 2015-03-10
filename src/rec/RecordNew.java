@@ -259,7 +259,6 @@ public class RecordNew extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		ClientPart cl = new ClientPart();
-		cl.sendFile(file);
 		this.dispose();
 	}
 

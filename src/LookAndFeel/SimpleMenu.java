@@ -56,7 +56,7 @@ public class SimpleMenu extends JApplet {
 		JMenuBar menubar = new JMenuBar();
 
 		setJMenuBar(menubar);
-		menubar.setOpaque(false);
+		//menubar.setOpaque(false);
 		
 		menu = new JMenu(userNow.getUsername());
 		// menu.setIcon(defaultIcon);
