@@ -1,7 +1,9 @@
 package rec;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -31,9 +33,13 @@ public class ChooseCategory extends javax.swing.JFrame {
 	private Word wordNow;
 	public DataBaseWord dw;
 	private CustomClass.Categories categ;
+	private Dimension d;
+	private Point p;
 
-	public ChooseCategory(User user) {
+	public ChooseCategory(User user, Dimension d, Point p) {
 		this.userNow = user;
+		this.d = d;
+		this.p = p;
 		DataBaseWord dw = new DataBaseWord();
 		try {
 			Categories = (ArrayList<String>) dw.getCategories();
@@ -50,9 +56,11 @@ public class ChooseCategory extends javax.swing.JFrame {
 		northPanel = new JPanel();
 		southPanel = new JPanel();
 		hiLabel = new JLabel();
-		
-		setSize(720, 720);
-		setLocationRelativeTo(null);
+
+		// setSize(720, 720);
+		setSize(d);
+		setLocation(p);
+		// setLocationRelativeTo(null);
 		setVisible(true);
 
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -96,19 +104,22 @@ public class ChooseCategory extends javax.swing.JFrame {
 		pa.add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		setTitle("ChooseCategories");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 		add(pa);
 	}
 
 	void BackActionPerformed() {
-		new PlayOrCreate(userNow);
+		Dimension d;
+		Point p;
+		p = getLocationOnScreen();
+		d = getSize();
+		new PlayOrCreate(userNow, d, p);
 		this.dispose();
 	}
 
 	void buttonActionPerformed(String str) {
-		this.dispose();
+		
 		try {
 			DataBaseWord dw = new DataBaseWord();
 			categ = new CustomClass.Categories();
@@ -117,11 +128,12 @@ public class ChooseCategory extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ChooseWord rn = new ChooseWord(userNow, categ);
-		rn.setSize(1280, 720);
-		rn.setLocationRelativeTo(null);
-		rn.setVisible(true);
-
+		Dimension d;
+		Point p;
+		p = getLocationOnScreen();
+		d = getSize();
+		new ChooseWord(userNow, categ, d, p);
+		this.dispose();
 	}
 
 	private javax.swing.JPanel centerPanel;

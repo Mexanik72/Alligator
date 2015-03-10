@@ -3,6 +3,7 @@ package rec;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 
@@ -14,9 +15,13 @@ import LookAndFeel.SimpleMenu;
 public class PlayOrCreate extends JFrame {
 
 	private User userNow;
+	private Dimension d;
+	private Point p;
 
-	PlayOrCreate(User user) {
+	PlayOrCreate(User user, Dimension d, Point p) {
 		this.userNow = user;
+		this.d = d;
+		this.p = p;
 		initComponents();
 	}
 
@@ -26,10 +31,12 @@ public class PlayOrCreate extends JFrame {
 		play = new javax.swing.JButton("Play");
 		create = new javax.swing.JButton("Create");
 
-		setSize(720, 720);
-		setLocationRelativeTo(null);
+		//setSize(720, 720);
+		//setLocationRelativeTo(null);
+		setSize(d);
+		setLocation(p);
 		setVisible(true);
-		
+
 		ContentPanel pa = new ContentPanel();
 		pa.setLayout(new BorderLayout());
 		northPanel.setLayout(new BorderLayout());
@@ -73,8 +80,15 @@ public class PlayOrCreate extends JFrame {
 
 	private void createActionPerformed() {
 
-		new ChooseCategory(userNow);
-		
+		Dimension d;
+		Point p;
+		p = getLocationOnScreen();
+		getLocationOnScreen();
+		d = getSize();
+System.out.println(d.height);
+System.out.println(d.width);
+		new ChooseCategory(userNow, d, p);
+
 		this.dispose();
 	}
 

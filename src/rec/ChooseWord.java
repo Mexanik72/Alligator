@@ -1,10 +1,12 @@
 package rec;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageObserver;
@@ -40,10 +42,14 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 	private String Star32 = "src/Images/forWords/Star32.png";
 	private String Star322 = "src/Images/forWords/Star322.png";
 	int i = 0, j = 0;
+	private Dimension d;
+	private Point p;
 
-	public ChooseWord(User user, Categories category) {
+	public ChooseWord(User user, Categories category, Dimension d, Point p) {
 		this.userNow = user;
 		this.categoryNow = category;
+		this.d = d;
+		this.p = p;
 		DataBaseWord dw = new DataBaseWord();
 		try {
 			Words = (ArrayList<String>) dw.getWordsWhereC(categoryNow.getId());
@@ -109,14 +115,21 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		pa.add(southPanel, java.awt.BorderLayout.SOUTH);
 
 		setTitle("ChooseWord");
-		setSize(350, 300);
+		//setSize(350, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		//setLocationRelativeTo(null);
+		setSize(d);
+		setLocation(p);
+		setVisible(true);
 		add(pa);
 	}
 	
 	void BackActionPerformed() {
-		new ChooseCategory(userNow);
+		Dimension d;
+		Point p;
+		p = getLocationOnScreen();
+		d = getSize();
+		new ChooseCategory(userNow, d, p);
 		this.dispose();
 	}
 

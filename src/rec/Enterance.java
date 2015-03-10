@@ -2,7 +2,9 @@ package rec;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.util.List;
 import java.util.Timer;
 
@@ -148,7 +150,11 @@ public class Enterance extends javax.swing.JFrame {
 						}
 						if (User.getPassword().equals(pass)) {
 							FlagWrongUser = true;
-							new PlayOrCreate(User);
+							Dimension d = new Dimension();
+							Point p;
+							p = getLocationOnScreen();
+							d.setSize(700, 700);
+							new PlayOrCreate(User, d, p);
 							
 							this.dispose();
 						} else {
