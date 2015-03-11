@@ -31,10 +31,14 @@ public class PlayOrCreate extends JFrame {
 		play = new javax.swing.JButton("Play");
 		create = new javax.swing.JButton("Create");
 
-		//setSize(720, 720);
-		//setLocationRelativeTo(null);
+		// setSize(720, 720);
 		setSize(d);
-		setLocation(p);
+		if (p == null) {
+			setLocationRelativeTo(null);
+		} else {
+			setLocation(p);
+		}
+		
 		setVisible(true);
 
 		ContentPanel pa = new ContentPanel();
@@ -85,8 +89,6 @@ public class PlayOrCreate extends JFrame {
 		p = getLocationOnScreen();
 		getLocationOnScreen();
 		d = getSize();
-System.out.println(d.height);
-System.out.println(d.width);
 		new ChooseCategory(userNow, d, p);
 
 		this.dispose();
