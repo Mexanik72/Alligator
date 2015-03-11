@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,9 +35,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import CustomClass.Movie;
+import CustomClass.Score;
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseMovies;
+import DataBase.DataBaseScore;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.SimpleMenu;
@@ -250,6 +254,23 @@ public class RecordNew extends javax.swing.JFrame {
 		mv.setOwner(userNow.getId());
 		mv.setName(file.toString());
 		mv.setWord(wordNow.getId());
+		
+		DataBaseScore dbs = new DataBaseScore();
+		try {
+			int scoreNow = dbs.getScoreByUser(userNow.getId());
+			scoreNow = scoreNow + (wordNow.getRate() * 5);
+			java.util.Date someDate = Calendar.getInstance().getTime();
+			java.sql.Date sqlDate = new java.sql.Date(someDate.getTime());
+			Score score = new Score();
+			score.setDate(sqlDate);
+			//score.setDate(new Date(System.currentTimeMillis()));
+			score.setUser(userNow.getId());
+			score.setRate(scoreNow);
+			dbs.addScore(score);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			db.addMovie(mv);
 		} catch (Exception e) {

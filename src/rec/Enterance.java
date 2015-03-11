@@ -5,13 +5,20 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import CustomClass.Score;
 import CustomClass.User;
 import DataBase.DataBaseUsers;
 import LookAndFeel.CustomDialog;
@@ -29,7 +36,7 @@ public class Enterance extends javax.swing.JFrame {
 	Font font = new Font("Verdana", Font.BOLD, 24);
 
 	public Enterance() {
-		initComponents();
+		initComponents();		
 	}
 
 	private void initComponents() {
