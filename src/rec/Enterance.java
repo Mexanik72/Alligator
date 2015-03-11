@@ -154,7 +154,7 @@ public class Enterance extends javax.swing.JFrame {
 							Point p;
 							p = getLocationOnScreen();
 							d.setSize(700, 700);
-							new PlayOrCreate(User, d, p);
+							new PlayOrCreate(User, d, null);
 							
 							this.dispose();
 						} else {
