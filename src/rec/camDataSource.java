@@ -15,12 +15,14 @@ public class camDataSource {
 
 	private Component parent;
 
-	private DataSource mainCamSource;
+	static private DataSource mainCamSource;
 	private MediaLocator ml;
 	private Processor processor;
 	private boolean processing;
-	
-	public camDataSource() {}
+	static boolean flag = true;
+
+	public camDataSource() {
+	}
 
 	public camDataSource(Component parent) {
 		this.parent = parent;
@@ -28,35 +30,40 @@ public class camDataSource {
 	}
 
 	public void setMainSource() {
-		
+
 		setProcessing(false);
 		VideoFormat vidformat = new VideoFormat(VideoFormat.YUV);
 		Vector devices = CaptureDeviceManager.getDeviceList(vidformat);
-		
+
 		CaptureDeviceInfo di = null;
 
-//		if (devices.size() > 0)
-//			di = (CaptureDeviceInfo) devices.elementAt(0);
-//		else {
-//			JOptionPane.showMessageDialog(parent,
-//					"Your camera is not connected" , "No webcam found",
-//					JOptionPane.WARNING_MESSAGE);
-//			return;
-//		}
+		if (devices.size() > 0)
+			di = (CaptureDeviceInfo) devices.elementAt(0);
+		else {
+			JOptionPane.showMessageDialog(parent,
+					"Your camera is not connected", "No webcam found",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
 		try {
 			ml = di.getLocator();
-			setMainCamSource(Manager.createDataSource(ml));
+			if (flag) {
+				setMainCamSource(Manager.createDataSource(ml));
+				flag = false;
+			} else {
+				setMainCamSource(Manager
+						.createCloneableDataSource(getMainCamSource()));
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(parent, "Exception locating media: "
 					+ e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		
+
 	}
 
 	public void makeDataSourceCloneable() {
-
 		setMainCamSource(Manager.createCloneableDataSource(getMainCamSource())); // turn
 																					// our
 																					// data
@@ -66,7 +73,6 @@ public class camDataSource {
 																					// cloneable
 																					// data
 																					// source
-
 	}
 
 	public void startProcessing() {

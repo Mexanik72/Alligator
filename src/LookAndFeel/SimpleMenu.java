@@ -3,12 +3,16 @@ package LookAndFeel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import rec.Enterance;
 import CustomClass.User;
 import DataBase.DataBaseUsers;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.*;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.awt.image.BufferedImage;
@@ -21,7 +25,7 @@ public class SimpleMenu extends JApplet {
 
 	private JMenu menu;
 
-	private JMenuItem item1, item2, item3;
+	private JMenuItem item1, item2, item3, item4;
 
 	private User userNow;
 
@@ -34,16 +38,23 @@ public class SimpleMenu extends JApplet {
 
 			(JMenuItem) e.getSource();
 
-			if (jmi.equals(item2))
+			if (jmi.equals(item4))
 
 				System.exit(0);
 
-			else
+			if (jmi.equals(item3)) {
+				
+				Enterance frame = new Enterance();
+				frame = new Enterance();
+				frame.setSize(500, 320);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				
+			} else
 
 				showStatus("My Simple Menu");
 
 		}
-
 	}
 
 	public SimpleMenu(User user) {
@@ -56,8 +67,8 @@ public class SimpleMenu extends JApplet {
 		JMenuBar menubar = new JMenuBar();
 
 		setJMenuBar(menubar);
-		//menubar.setOpaque(false);
-		
+		// menubar.setOpaque(false);
+
 		menu = new JMenu(userNow.getUsername());
 		// menu.setIcon(defaultIcon);
 		Image img, averimg;
@@ -76,11 +87,13 @@ public class SimpleMenu extends JApplet {
 
 		averimg = createImage(new FilteredImageSource(img.getSource(), asf));
 		menu.setIcon(new ImageIcon(averimg));
-		item1 = new JMenuItem("About");
+		item1 = new JMenuItem("Таблица рекордов");
 
-		item3 = new JMenuItem("Load av");
+		item2 = new JMenuItem("Загрузить аватар");
 
-		item2 = new JMenuItem("Exit");
+		item3 = new JMenuItem("Сменить пользователя");
+
+		item4 = new JMenuItem("Выход");
 
 		item1.addActionListener(
 
@@ -90,7 +103,11 @@ public class SimpleMenu extends JApplet {
 
 		new MenuItemListener());
 
-		item3.addActionListener((new java.awt.event.ActionListener() {
+		item3.addActionListener(
+
+		new MenuItemListener());
+
+		item2.addActionListener((new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				loadImageMouseClicked();
 			}
@@ -101,6 +118,8 @@ public class SimpleMenu extends JApplet {
 		menu.add(item2);
 
 		menu.add(item3);
+
+		menu.add(item4);
 
 		menubar.add(menu);
 

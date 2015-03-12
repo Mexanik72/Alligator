@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,9 +35,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import CustomClass.Movie;
+import CustomClass.Score;
 import CustomClass.User;
 import CustomClass.Word;
 import DataBase.DataBaseMovies;
+import DataBase.DataBaseScore;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.SimpleMenu;
@@ -51,10 +55,11 @@ public class RecordNew extends javax.swing.JFrame {
 	private Processor processor;
 	private Processor recordProcessor;
 	private camStateHelper playhelper;
-	File file = null;
+	private File file = null;
 	private User userNow;
 	private Word wordNow;
 	private List<Integer> ListIdmovies;
+	private boolean flag = false;
 
 	private Timer timer = new Timer();
 
@@ -250,14 +255,38 @@ public class RecordNew extends javax.swing.JFrame {
 		mv.setOwner(userNow.getId());
 		mv.setName(file.toString());
 		mv.setWord(wordNow.getId());
+		
+		DataBaseScore dbs = new DataBaseScore();
+		try {
+			int scoreNow = dbs.getScoreByUser(userNow.getId());
+			scoreNow = scoreNow + (wordNow.getRate() * 5);
+			java.util.Date someDate = Calendar.getInstance().getTime();
+			java.sql.Date sqlDate = new java.sql.Date(someDate.getTime());
+			Score score = new Score();
+			score.setDate(sqlDate);
+			//score.setDate(new Date(System.currentTimeMillis()));
+			score.setUser(userNow.getId());
+			score.setRate(scoreNow);
+			dbs.addScore(score);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			db.addMovie(mv);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ClientPart cl = new ClientPart();
+		flag = true;
+		new ClientPart(file);
+		Dimension d = new Dimension();
+		Point p;
+		p = getLocationOnScreen();
+		d.setSize(720, 720);
+		new PlayOrCreate(userNow, d, p);
 		this.dispose();
+		
 	}
 
 	public void recordToFile(File file) {
@@ -340,10 +369,11 @@ public class RecordNew extends javax.swing.JFrame {
 
 	public void stopRecording() {
 		try {
-
+			recordProcessor.stop();
 			recordProcessor.close();
 			dataSink.stop();
 			dataSink.close();
+			
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this,
 					"cannot stop recording " + e.getMessage(), "Error",
@@ -367,10 +397,10 @@ public class RecordNew extends javax.swing.JFrame {
 	// End of variables declaration
 	CaptureDeviceInfo videoDevice = null;
 
-	public class GameTimer extends TimerTask {
+	public class GameTimer extends TimerTask implements Runnable{
 		public void run() {
 			int seconds = 0, minutes = 0;
-			while (true) {
+			while (!flag) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -385,14 +415,9 @@ public class RecordNew extends javax.swing.JFrame {
 				}
 				if (minutes == 1 && seconds == 30) {
 					stopAndSend();
-					Dimension d = new Dimension();
-					Point p;
-					p = getLocationOnScreen();
-					d.setSize(720, 720);
-					new PlayOrCreate(userNow, d, p);
-					break;
 				}
 			}
+			
 		}
 	}
 }
