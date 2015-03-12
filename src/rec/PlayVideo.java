@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import CustomClass.Categories;
 import CustomClass.User;
 import LookAndFeel.HintTextField;
 
@@ -36,7 +37,7 @@ public class PlayVideo extends JFrame {
 	//private JFileChooser movieChooser;
 	private JButton button;
 
-	public PlayVideo(User user) {
+	public PlayVideo(User user, Categories categor) {
 
 //		if (movieChooser == null)
 //			movieChooser = new JFileChooser();
@@ -67,9 +68,9 @@ public class PlayVideo extends JFrame {
 //		};
 //		button.addActionListener(listener);
 //		getContentPane().add(button, BorderLayout.NORTH);
-		int category = 2;
+		//int category = 2;
 		ClientPart cl = new ClientPart();
-		String path = cl.getVideo(category);
+		String path = cl.getVideo(categor.getId());
 		File file = new File(path);
 		try {
 			load(file);

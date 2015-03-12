@@ -35,11 +35,13 @@ public class ChooseCategory extends javax.swing.JFrame {
 	private CustomClass.Categories categ;
 	private Dimension d;
 	private Point p;
+	private boolean boo;
 
-	public ChooseCategory(User user, Dimension d, Point p) {
+	public ChooseCategory(User user, Dimension d, Point p, boolean boo) {
 		this.userNow = user;
 		this.d = d;
 		this.p = p;
+		this.boo = boo;
 		DataBaseWord dw = new DataBaseWord();
 		try {
 			Categories = (ArrayList<String>) dw.getCategories();
@@ -119,21 +121,34 @@ public class ChooseCategory extends javax.swing.JFrame {
 	}
 
 	void buttonActionPerformed(String str) {
-		
-		try {
+		if (boo) {
+			try {
+				DataBaseWord dw = new DataBaseWord();
+				categ = new CustomClass.Categories();
+				categ = dw.getIdByCategories(str);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Dimension d;
+			Point p;
+			p = getLocationOnScreen();
+			d = getSize();
+			new ChooseWord(userNow, categ, d, p);
+			this.dispose();
+		}
+		else {
 			DataBaseWord dw = new DataBaseWord();
 			categ = new CustomClass.Categories();
-			categ = dw.getIdByCategories(str);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				categ = dw.getIdByCategories(str);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			new PlayVideo(userNow, categ);
 		}
-		Dimension d;
-		Point p;
-		p = getLocationOnScreen();
-		d = getSize();
-		new ChooseWord(userNow, categ, d, p);
-		this.dispose();
 	}
 
 	private javax.swing.JPanel centerPanel;

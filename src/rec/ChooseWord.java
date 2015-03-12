@@ -129,7 +129,7 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		Point p;
 		p = getLocationOnScreen();
 		d = getSize();
-		new ChooseCategory(userNow, d, p);
+		new ChooseCategory(userNow, d, p, true);
 		this.dispose();
 	}
 
