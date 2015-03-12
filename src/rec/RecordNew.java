@@ -55,10 +55,11 @@ public class RecordNew extends javax.swing.JFrame {
 	private Processor processor;
 	private Processor recordProcessor;
 	private camStateHelper playhelper;
-	File file = null;
+	private File file = null;
 	private User userNow;
 	private Word wordNow;
 	private List<Integer> ListIdmovies;
+	private boolean flag = false;
 
 	private Timer timer = new Timer();
 
@@ -277,8 +278,15 @@ public class RecordNew extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ClientPart cl = new ClientPart();
+		flag = true;
+		new ClientPart(file);
+		Dimension d = new Dimension();
+		Point p;
+		p = getLocationOnScreen();
+		d.setSize(720, 720);
+		new PlayOrCreate(userNow, d, p);
 		this.dispose();
+		
 	}
 
 	public void recordToFile(File file) {
@@ -361,10 +369,11 @@ public class RecordNew extends javax.swing.JFrame {
 
 	public void stopRecording() {
 		try {
-
+			recordProcessor.stop();
 			recordProcessor.close();
 			dataSink.stop();
 			dataSink.close();
+			
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this,
 					"cannot stop recording " + e.getMessage(), "Error",
@@ -388,10 +397,10 @@ public class RecordNew extends javax.swing.JFrame {
 	// End of variables declaration
 	CaptureDeviceInfo videoDevice = null;
 
-	public class GameTimer extends TimerTask {
+	public class GameTimer extends TimerTask implements Runnable{
 		public void run() {
 			int seconds = 0, minutes = 0;
-			while (true) {
+			while (!flag) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -406,14 +415,9 @@ public class RecordNew extends javax.swing.JFrame {
 				}
 				if (minutes == 1 && seconds == 30) {
 					stopAndSend();
-					Dimension d = new Dimension();
-					Point p;
-					p = getLocationOnScreen();
-					d.setSize(720, 720);
-					new PlayOrCreate(userNow, d, p);
-					break;
 				}
 			}
+			
 		}
 	}
 }

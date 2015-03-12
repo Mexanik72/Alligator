@@ -49,6 +49,8 @@ public class Enterance extends javax.swing.JFrame {
 		labelForUser = new JLabel();
 		labelForPass = new JLabel();
 		
+		
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Alligator:Enterance");
 
@@ -99,6 +101,7 @@ public class Enterance extends javax.swing.JFrame {
 			}
 		});
 		centerPanel.add(registr);
+		
 		// getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 		pack();
 		// try {

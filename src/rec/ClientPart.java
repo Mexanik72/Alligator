@@ -31,6 +31,7 @@ public class ClientPart {
 	}
 
 	ClientPart(File selectedFile) {
+		connect();
 		sendVideo(selectedFile);
 	}
 	
