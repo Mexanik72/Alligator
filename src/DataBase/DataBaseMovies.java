@@ -50,19 +50,36 @@ public class DataBaseMovies {
 		con.close();
 	}
 	
-	public String getPathByWord (int wordId) throws Exception {
+	public Movie getPathByWord (int wordId) throws Exception {
+		Movie mov = new Movie();
 		Connection con = GetConnection.getConnection();
-		PreparedStatement st = con.prepareStatement("SELECT name FROM movies WHERE word = ?");
+		PreparedStatement st = con.prepareStatement("SELECT owner, name, word FROM movies WHERE word = ?");
 		st.setInt(1, wordId);
 		ResultSet rs = st.executeQuery();
 		
 		while (rs.next()) {
-			String path = rs.getString(1);
-			return path;
+			mov = new Movie(wordId, rs.getInt(1), rs.getString(2), rs.getInt(3));
 		}
 		
 		rs.close();
 		con.close();
-		return null;		
+		return mov;		
+	}
+	
+	public List<String> getKeyWords(int word) throws Exception {
+		List<String> moviesIds = new ArrayList<String>();
+		// Получение соединения с БД
+		Connection con = GetConnection.getConnection();
+
+		PreparedStatement st = con.prepareStatement("Select key From key_words Where word = ?");
+		st.setInt(1, word);
+		ResultSet rs = st.executeQuery();
+		while (rs.next()) {
+			moviesIds.add(rs.getString(1));
+		}
+		// Закрываем выборку и соединение с БД
+		rs.close();
+		con.close();
+		return moviesIds;
 	}
 }

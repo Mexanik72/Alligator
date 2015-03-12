@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import CustomClass.Movie;
 import CustomClass.Word;
 import DataBase.DataBaseMovies;
 import DataBase.DataBaseWord;
@@ -20,6 +21,8 @@ public class ClientPart {
 	File selectFile;
 	int port = 2154;
 	String addres = "127.0.0.1";
+	Movie movieNow;
+	
 	
 	DataOutputStream outD = null;
 	InetAddress ipAddress = null;
@@ -86,26 +89,26 @@ public class ClientPart {
 
 	}
 
-	public String getVideo(int category) {
+	public Movie getVideo(int category) {
 		// TODO Auto-generated method stub		
 		ArrayList<Integer> words = new ArrayList<Integer>();
 		DataBaseWord dbw = new DataBaseWord();
 		DataBaseMovies dbm = new DataBaseMovies();
 		try {
 			words = (ArrayList<Integer>) dbw.getIdByCategories(category);
-			String path = dbm
-					.getPathByWord(words.get((int) (Math.random() * words
-							.size())));
-			
+			Integer word = words.get((int) (Math.random() * words.size()));
+			System.out.println(words.size());
+			movieNow = dbm
+					.getPathByWord(word);
+			System.out.println(movieNow.getName());
 			outD = new DataOutputStream(socket.getOutputStream());
 			outD.writeByte(0);
-			outD.writeUTF(path);
+			outD.writeUTF(movieNow.getName());
 			
 			long fileSize = dis.readLong(); // получаем размер файла
 			
-			System.out.println(fileSize);
 			byte[] buffer = new byte[64 * 1024];
-			FileOutputStream outF = new FileOutputStream(path);
+			FileOutputStream outF = new FileOutputStream(movieNow.getName());
 			int count, total = 0;
 			
 			while ((count = dis.read(buffer)) != -1) {
@@ -120,7 +123,7 @@ public class ClientPart {
 			
 			socket.close();
 			
-			return path;
+			return movieNow;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
