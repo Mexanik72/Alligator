@@ -78,7 +78,12 @@ public class PlayOrCreate extends JFrame {
 	}
 
 	private void playActionPerformed() {
-		new PlayVideo(userNow);
+		Dimension d;
+		Point p;
+		p = getLocationOnScreen();
+		getLocationOnScreen();
+		d = getSize();
+		new ChooseCategory(userNow, d, p, false);
 		this.dispose();
 	}
 
@@ -89,7 +94,7 @@ public class PlayOrCreate extends JFrame {
 		p = getLocationOnScreen();
 		getLocationOnScreen();
 		d = getSize();
-		new ChooseCategory(userNow, d, p);
+		new ChooseCategory(userNow, d, p, true);
 
 		this.dispose();
 	}
