@@ -13,6 +13,8 @@ import DataBase.DataBaseMovies;
 import DataBase.DataBaseWord;
 
 import java.net.*;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.*;
 
 public class ClientPart {
@@ -22,8 +24,7 @@ public class ClientPart {
 	int port = 2154;
 	String addres = "127.0.0.1";
 	Movie movieNow;
-	
-	
+
 	DataOutputStream outD = null;
 	InetAddress ipAddress = null;
 	InputStream in = null;
@@ -37,7 +38,7 @@ public class ClientPart {
 		connect();
 		sendVideo(selectedFile);
 	}
-	
+
 	private void connect() {
 		try {
 			ipAddress = InetAddress.getByName(addres);
@@ -89,28 +90,22 @@ public class ClientPart {
 
 	}
 
-	public Movie getVideo(int category) {
-		// TODO Auto-generated method stub		
-		ArrayList<Integer> words = new ArrayList<Integer>();
-		DataBaseWord dbw = new DataBaseWord();
-		DataBaseMovies dbm = new DataBaseMovies();
+	public Movie getVideo(Movie movie) {
+		// TODO Auto-generated method stub
+		this.movieNow = movie;
 		try {
-			words = (ArrayList<Integer>) dbw.getIdByCategories(category);
-			Integer word = words.get((int) (Math.random() * words.size()));
-			System.out.println(words.size());
-			movieNow = dbm
-					.getPathByWord(word);
-			System.out.println(movieNow.getName());
 			outD = new DataOutputStream(socket.getOutputStream());
+
 			outD.writeByte(0);
+
 			outD.writeUTF(movieNow.getName());
-			
+
 			long fileSize = dis.readLong(); // получаем размер файла
-			
+
 			byte[] buffer = new byte[64 * 1024];
 			FileOutputStream outF = new FileOutputStream(movieNow.getName());
 			int count, total = 0;
-			
+
 			while ((count = dis.read(buffer)) != -1) {
 				total += count;
 				outF.write(buffer, 0, count);
@@ -120,15 +115,14 @@ public class ClientPart {
 			}
 			outF.flush();
 			outF.close();
-			
+
 			socket.close();
-			
+
 			return movieNow;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 }

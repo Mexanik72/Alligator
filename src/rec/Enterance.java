@@ -1,10 +1,18 @@
 package rec;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,13 +24,19 @@ import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import CustomClass.Score;
 import CustomClass.User;
 import DataBase.DataBaseUsers;
+import DataBase.DataBaseWord;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
+import LookAndFeel.RatePanel;
 
 public class Enterance extends javax.swing.JFrame {
 
@@ -36,7 +50,7 @@ public class Enterance extends javax.swing.JFrame {
 	Font font = new Font("Verdana", Font.BOLD, 24);
 
 	public Enterance() {
-		initComponents();		
+		initComponents();
 	}
 
 	private void initComponents() {
@@ -48,9 +62,7 @@ public class Enterance extends javax.swing.JFrame {
 		jPanel1 = new JLabel();
 		labelForUser = new JLabel();
 		labelForPass = new JLabel();
-		
-		
-		
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Alligator:Enterance");
 
@@ -101,7 +113,7 @@ public class Enterance extends javax.swing.JFrame {
 			}
 		});
 		centerPanel.add(registr);
-		
+
 		// getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 		pack();
 		// try {
@@ -165,7 +177,7 @@ public class Enterance extends javax.swing.JFrame {
 							p = getLocationOnScreen();
 							d.setSize(700, 700);
 							new PlayOrCreate(User, d, null);
-							
+
 							this.dispose();
 						} else {
 							// JOptionPane
@@ -201,16 +213,18 @@ public class Enterance extends javax.swing.JFrame {
 	}
 
 	private void registrActionPerformed(java.awt.event.ActionEvent evt) {
-		userName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		password.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		reg = new Registry();
-		reg.setVisible(true);
-		reg.setSize(500, 360);
-		reg.setLocationRelativeTo(null);
+		 userName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		 password.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		 reg = new Registry();
+		 reg.setVisible(true);
+		 reg.setSize(500, 360);
+		 reg.setLocationRelativeTo(null);
+		
 	}
 
 	public void setVisReg() {
 		reg.setVisible(false);
 	}
 
+	
 }
