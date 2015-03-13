@@ -59,10 +59,14 @@ public class ChooseCategory extends javax.swing.JFrame {
 		southPanel = new JPanel();
 		hiLabel = new JLabel();
 
-		// setSize(720, 720);
-		setSize(d);
-		setLocation(p);
-		// setLocationRelativeTo(null);
+		if (d != null)
+			setSize(d);
+		else
+			setSize(720, 720);
+		if (p != null)
+			setLocation(p);
+		else
+			setLocationRelativeTo(null);
 		setVisible(true);
 
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -136,8 +140,8 @@ public class ChooseCategory extends javax.swing.JFrame {
 			d = getSize();
 			new ChooseWord(userNow, categ, d, p);
 			this.dispose();
-		}
-		else {
+		} else {
+			this.dispose();
 			DataBaseWord dw = new DataBaseWord();
 			categ = new CustomClass.Categories();
 			try {
@@ -146,8 +150,9 @@ public class ChooseCategory extends javax.swing.JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			new PlayVideo(userNow, categ);
+			
 		}
 	}
 

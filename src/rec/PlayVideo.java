@@ -3,12 +3,23 @@ package rec;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.media.ControllerAdapter;
@@ -16,17 +27,23 @@ import javax.media.ControllerListener;
 import javax.media.Manager;
 import javax.media.Player;
 import javax.media.RealizeCompleteEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import CustomClass.Categories;
 import CustomClass.Movie;
+import CustomClass.Score;
 import CustomClass.User;
 import DataBase.DataBaseMovies;
+import DataBase.DataBaseWord;
 import LookAndFeel.HintTextField;
+import LookAndFeel.RatePanel;
 
 public class PlayVideo extends JFrame {
 
@@ -44,6 +61,7 @@ public class PlayVideo extends JFrame {
 	private Categories categor;
 	private Movie movieNow;
 	private List<String> Key_words;
+	private int rate;
 
 	public PlayVideo(User user, Categories categor) {
 		this.categor = categor;
@@ -77,14 +95,18 @@ public class PlayVideo extends JFrame {
 		// button.addActionListener(listener);
 		// getContentPane().add(button, BorderLayout.NORTH);
 		// int category = 2;
+
 		ClientPart cl = new ClientPart();
-		movieNow = cl.getVideo(categor.getId());
-		File file = new File(movieNow.getName());
-		try {
-			load(file);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		movieNow = chooseVideo(categor.getId());
+		if (movieNow != null) {
+			movieNow = cl.getVideo(movieNow);
+			File file = new File(movieNow.getName());
+			try {
+				load(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		pack();
 		show();
@@ -145,16 +167,90 @@ public class PlayVideo extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					for(int i=0;i<Key_words.size();i++){
-						if (Key_words.get(i).equals(crocoText.getText().toLowerCase())) {
-							System.out.println("norma");
-						}
-						else {
+					for (int i = 0; i < Key_words.size(); i++) {
+						if (Key_words.get(i).equals(
+								crocoText.getText().toLowerCase())) {
+							Dimension d = new Dimension();
+							Point p;
+							p = getLocationOnScreen();
+							d.setSize(700, 700);
+							clos();
+
+							java.util.Date someDate = Calendar.getInstance()
+									.getTime();
+							java.sql.Date sqlDate = new java.sql.Date(someDate
+									.getTime());
+							jop();
+							
+							try {
+								dbm.addRatetoMovie(movieNow, sqlDate, rate+1);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							new PlayOrCreate(userNow, d, null);
+						} else {
 							System.out.println("bad");
 						}
 					}
 				}
 			}
 		});
+	}
+
+	public void jop() {
+		RatePanel rap = new RatePanel();
+		Object[] inputs = {};
+		int res = JOptionPane.showOptionDialog(null, rap, "Rate",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+				null, inputs, "");
+		this.rate = rap.getRate();
+		
+	}
+
+	public void clos() {
+		this.dispose();
+	}
+
+	public Movie chooseVideo(int categor) {
+		ArrayList<Integer> words = new ArrayList<Integer>();
+		DataBaseWord dbw = new DataBaseWord();
+		DataBaseMovies dbm = new DataBaseMovies();
+		List<Movie> movies = new ArrayList<Movie>();
+		try {
+			movies = dbm.getMovieByCategor(categor);
+			// words = (ArrayList<Integer>) dbw.getIdByCategories(categor);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (movies.size() == 0) {
+			// Object[] inputs = { "¬ыбрать другое", "«аписать свое" };
+			int res = JOptionPane
+					.showOptionDialog(
+							null,
+							"¬ данной категории нет видео, вы можете выбрать видео из другой категории или записать свое",
+							"Sorry", JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.WARNING_MESSAGE, null, null, "");
+			if (res == JOptionPane.OK_OPTION) {
+				System.out.println("pfirk");
+				new ChooseCategory(userNow, null, null, false);
+				clos();
+			}
+			if (res == JOptionPane.CANCEL_OPTION) {
+				System.out.println("we");
+				new ChooseCategory(userNow, null, null, true);
+				clos();
+			}
+			clos();
+		} else {
+
+			Movie mov = movies.get((int) (Math.random() * movies.size()));
+			System.out.println(mov.getName());
+			return mov;
+		}
+		return null;
 	}
 }

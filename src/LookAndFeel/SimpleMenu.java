@@ -42,6 +42,10 @@ public class SimpleMenu extends JApplet {
 
 				System.exit(0);
 
+			if (jmi.equals(item1)) {
+				
+			}
+			
 			if (jmi.equals(item3)) {
 				
 				Enterance frame = new Enterance();
