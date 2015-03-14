@@ -72,7 +72,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		centerPanel.setLayout(new GridLayout(10, 1, 10, 10));
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 10; i++) {
 			final JButton butt = new JButton(Categories.get(i));
 			butt.setIcon(new ImageIcon("src/Images/forWords/"
 					+ Categories.get(i) + ".png"));

@@ -118,6 +118,7 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		//setSize(350, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setLocationRelativeTo(null);
+		d.setSize(d.getWidth()+200, d.getHeight());
 		setSize(d);
 		setLocation(p);
 		setVisible(true);
