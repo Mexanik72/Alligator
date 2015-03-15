@@ -1,42 +1,18 @@
 package rec;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import CustomClass.Score;
 import CustomClass.User;
-import DataBase.DataBaseUsers;
-import DataBase.DataBaseWord;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
-import LookAndFeel.RatePanel;
 
 public class Enterance extends javax.swing.JFrame {
 
@@ -101,7 +77,15 @@ public class Enterance extends javax.swing.JFrame {
 		centerPanel.add(jPanel1);
 		submit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				submitActionPerformed(evt);
+				try {
+					submitActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		centerPanel.add(submit);
@@ -143,7 +127,7 @@ public class Enterance extends javax.swing.JFrame {
 	private JLabel labelForUser;
 	private JLabel labelForPass;
 
-	private void submitActionPerformed(java.awt.event.ActionEvent evt) {
+	private void submitActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 		// TODO add your handling code here:
 		userName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		password.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -152,62 +136,33 @@ public class Enterance extends javax.swing.JFrame {
 		String pass = new String(s);
 		if (!pass.equals("")) {
 			if (!user.equals("")) {
-				List<String> usersNames = null;
-				User User = new User();
-				DataBaseUsers db = new DataBaseUsers();
-				try {
-					usersNames = db.getUsersNames();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				boolean FlagWrongUser = false;
-				for (int i = 0; i < usersNames.size(); i++) {
-					if (usersNames.get(i).equals(user)) {
-						try {
-							User = db.getUserByUsername(usersNames.get(i));
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (User.getPassword().equals(pass)) {
-							FlagWrongUser = true;
-							Dimension d = new Dimension();
-							Point p;
-							p = getLocationOnScreen();
-							d.setSize(700, 700);
-							new PlayOrCreate(User, d, null);
-
-							this.dispose();
-						} else {
-							// JOptionPane
-							// .showMessageDialog(rootPane,
-							// "Вы ввели неверный пароль, повторите пожалуйста ввод");
-							CustomDialog.showTooltipWindow(password, 3, null);
-							password.setBorder(BorderFactory
-									.createLineBorder(Color.RED));
-						}
+				ClientPart cl = new ClientPart();
+				UserAttributes ua = cl.authentication(user, pass);
+				User User = ua.getUser();
+				boolean flagWrongUser = ua.getFlagWrongUser();
+				boolean flagWrongPassword = ua.getFlagWrongPassword();
+				
+				if (!flagWrongUser) {	
+					if (!flagWrongPassword) {
+						Dimension d = new Dimension();
+						d.setSize(700, 700);
+						new PlayOrCreate(User, d, null);
+						this.dispose();
+					} else {
+						CustomDialog.showTooltipWindow(password, 3, null);
+						password.setBorder(BorderFactory
+								.createLineBorder(Color.RED));
 					}
-				}
-				if (FlagWrongUser == false) {
-					// JOptionPane
-					// .showMessageDialog(rootPane,
-					// "Вы ввели неверный username, повторите пожалуйста ввод");
+				} else {
 					CustomDialog.showTooltipWindow(userName, 1, null);
-
 					userName.setBorder(BorderFactory
 							.createLineBorder(Color.RED));
 				}
 			} else {
-				// JOptionPane
-				// .showMessageDialog(rootPane,
-				// "Вы ввели неверный username1, повторите пожалуйста ввод");
 				CustomDialog.showTooltipWindow(userName, 1, null);
 				userName.setBorder(BorderFactory.createLineBorder(Color.RED));
 			}
 		} else
-			// JOptionPane.showMessageDialog(rootPane,
-			// "Вы ввели неверный пароль, повторите пожалуйста ввод");
 			CustomDialog.showTooltipWindow(password, 3, null);
 		password.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}

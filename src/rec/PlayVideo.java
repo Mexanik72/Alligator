@@ -36,12 +36,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import server.DataBaseMovies;
+import server.DataBaseWord;
 import CustomClass.Categories;
 import CustomClass.Movie;
 import CustomClass.Score;
 import CustomClass.User;
-import DataBase.DataBaseMovies;
-import DataBase.DataBaseWord;
 import LookAndFeel.HintTextField;
 import LookAndFeel.RatePanel;
 

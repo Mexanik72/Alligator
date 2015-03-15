@@ -34,12 +34,12 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import server.DataBaseMovies;
+import server.DataBaseScore;
 import CustomClass.Movie;
 import CustomClass.Score;
 import CustomClass.User;
 import CustomClass.Word;
-import DataBase.DataBaseMovies;
-import DataBase.DataBaseScore;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.SimpleMenu;

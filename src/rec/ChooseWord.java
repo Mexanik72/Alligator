@@ -20,10 +20,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import server.DataBaseWord;
 import CustomClass.Categories;
 import CustomClass.User;
 import CustomClass.Word;
-import DataBase.DataBaseWord;
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.RoundButton;

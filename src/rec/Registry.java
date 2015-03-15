@@ -9,8 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import server.DataBaseUsers;
 import CustomClass.User;
-import DataBase.DataBaseUsers;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 

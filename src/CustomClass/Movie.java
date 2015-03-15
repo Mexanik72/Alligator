@@ -1,7 +1,5 @@
 package CustomClass;
 
-import java.sql.Date;
-
 public class Movie {
 	private int id;
 	private int owner;

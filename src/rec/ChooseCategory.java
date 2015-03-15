@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -17,8 +18,6 @@ import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.RoundButton;
 import CustomClass.User;
-import CustomClass.Word;
-import DataBase.DataBaseWord;
 import LookAndFeel.SimpleMenu;
 
 public class ChooseCategory extends javax.swing.JFrame {
@@ -29,31 +28,24 @@ public class ChooseCategory extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	private User userNow;
 	private ArrayList<String> Categories;
-	private Word WordFull;
-	private Word wordNow;
-	public DataBaseWord dw;
 	private CustomClass.Categories categ;
 	private Dimension d;
 	private Point p;
 	private boolean boo;
 
-	public ChooseCategory(User user, Dimension d, Point p, boolean boo) {
+	public ChooseCategory(User user, Dimension d, Point p, boolean boo) throws ClassNotFoundException, IOException
+	{
 		this.userNow = user;
 		this.d = d;
 		this.p = p;
 		this.boo = boo;
-		DataBaseWord dw = new DataBaseWord();
-		try {
-			Categories = (ArrayList<String>) dw.getCategories();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ClientPart cl = new ClientPart();
+		Categories = cl.getCategories();
 		initComponents();
 	}
 
-	private void initComponents() {
-
+	private void initComponents()
+	{
 		centerPanel = new JPanel();
 		northPanel = new JPanel();
 		southPanel = new JPanel();
@@ -125,15 +117,14 @@ public class ChooseCategory extends javax.swing.JFrame {
 	}
 
 	void buttonActionPerformed(String str) {
+		ClientPart cl = new ClientPart();
+		try {
+			categ = cl.getIdByCategories(str);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (boo) {
-			try {
-				DataBaseWord dw = new DataBaseWord();
-				categ = new CustomClass.Categories();
-				categ = dw.getIdByCategories(str);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			Dimension d;
 			Point p;
 			p = getLocationOnScreen();
@@ -142,17 +133,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 			this.dispose();
 		} else {
 			this.dispose();
-			DataBaseWord dw = new DataBaseWord();
-			categ = new CustomClass.Categories();
-			try {
-				categ = dw.getIdByCategories(str);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 			new PlayVideo(userNow, categ);
-			
 		}
 	}
 
