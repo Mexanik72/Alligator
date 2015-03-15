@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageObserver;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -20,10 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import server.DataBaseWord;
-import CustomClass.Categories;
-import CustomClass.User;
-import CustomClass.Word;
+import server.Categories;
+import server.User;
+import server.Word;
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.RoundButton;
@@ -38,7 +38,6 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 	private ArrayList<String> Words;
 	private Word WordFull;
 	private Word wordNow;
-	public DataBaseWord dw;
 	private String Star32 = "src/Images/forWords/Star32.png";
 	private String Star322 = "src/Images/forWords/Star322.png";
 	int i = 0, j = 0;
@@ -50,15 +49,14 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		this.categoryNow = category;
 		this.d = d;
 		this.p = p;
-		DataBaseWord dw = new DataBaseWord();
+		ClientPart cl = new ClientPart();
 		try {
-			Words = (ArrayList<String>) dw.getWordsWhereC(categoryNow.getId());
-		} catch (Exception e) {
+			Words = cl.getWordsWhereC(categoryNow.getId());
+		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
 		initComponents();
-
 	}
 
 	public ChooseWord() {
@@ -130,7 +128,12 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		Point p;
 		p = getLocationOnScreen();
 		d = getSize();
-		new ChooseCategory(userNow, d, p, true);
+		try {
+			new ChooseCategory(userNow, d, p, true);
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.dispose();
 	}
 
@@ -144,7 +147,12 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		button.setSize(100, 40);
 		button.setLayout(null);
 		i = random();
-		rate(button, i);
+		try {
+			rate(button, i);
+		} catch (ClassNotFoundException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		button.setBorderPainted(false);
 		button.setFocusPainted(false);
@@ -167,21 +175,22 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 
 		button.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				buttonActionPerformed(str);
+				try {
+					buttonActionPerformed(str);
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		MyButtonUI.setupButtonUI(button, 0, 3);
 	}
 
-	private void rate(JButton button1, int in) {
+	private void rate(JButton button1, int in) throws ClassNotFoundException, IOException {
 		button1.setLayout(new FlowLayout());
 		int i = 0, j = 0;
-		DataBaseWord dw = new DataBaseWord();
-		try {
-			wordNow = dw.getIdByWords(Words.get(in));
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		ClientPart cl = new ClientPart();
+		wordNow = cl.getIdByWords(Words.get(in));
 		i = wordNow.getRate();
 		JLabel[] labels = new JLabel[11];
 		int x = 80, y = 180, width = 32, height = 32;
@@ -216,7 +225,7 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 	private javax.swing.JButton button4;
 	private javax.swing.JLabel hiLabel;
 
-	private void buttonActionPerformed(String text) {
+	private void buttonActionPerformed(String text) throws ClassNotFoundException, IOException {
 
 		this.dispose();
 
@@ -224,13 +233,8 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		dataSource.setMainSource();
 		dataSource.makeDataSourceCloneable();
 		dataSource.startProcessing();
-		dw = new DataBaseWord();
-		try {
-			WordFull = dw.getIdByWords(text);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ClientPart cl = new ClientPart();
+		WordFull = cl.getIdByWords(text);
 		RecordNew rn = new RecordNew(dataSource, userNow, WordFull);
 		rn.setSize(1280, 720);
 		rn.setLocationRelativeTo(null);

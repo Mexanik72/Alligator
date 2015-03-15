@@ -14,10 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import server.User;
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.RoundButton;
-import CustomClass.User;
 import LookAndFeel.SimpleMenu;
 
 public class ChooseCategory extends javax.swing.JFrame {
@@ -28,7 +28,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	private User userNow;
 	private ArrayList<String> Categories;
-	private CustomClass.Categories categ;
+	private server.Categories categ;
 	private Dimension d;
 	private Point p;
 	private boolean boo;
@@ -72,7 +72,12 @@ public class ChooseCategory extends javax.swing.JFrame {
 			centerPanel.add(butt);
 			butt.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					buttonActionPerformed(butt.getText());
+					try {
+						buttonActionPerformed(butt.getText());
+					} catch (ClassNotFoundException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			});
 			MyButtonUI.setupButtonUI(butt, 0, 3);
@@ -116,7 +121,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 		this.dispose();
 	}
 
-	void buttonActionPerformed(String str) {
+	void buttonActionPerformed(String str) throws ClassNotFoundException, IOException {
 		ClientPart cl = new ClientPart();
 		try {
 			categ = cl.getIdByCategories(str);
@@ -124,6 +129,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		if (boo) {
 			Dimension d;
 			Point p;

@@ -5,7 +5,8 @@ import javax.swing.*;
 
 import rec.ClientPart;
 import rec.Enterance;
-import CustomClass.User;
+import server.User;
+
 import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.AreaAveragingScaleFilter;

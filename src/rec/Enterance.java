@@ -10,7 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import CustomClass.User;
+import server.User;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 

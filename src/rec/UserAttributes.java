@@ -1,6 +1,6 @@
 package rec;
 
-import CustomClass.User;
+import server.User;
 
 public class UserAttributes
 {
