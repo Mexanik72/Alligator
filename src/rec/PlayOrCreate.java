@@ -5,10 +5,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import CustomClass.User;
+import server.User;
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.SimpleMenu;
@@ -87,7 +88,12 @@ public class PlayOrCreate extends JFrame {
 		p = getLocationOnScreen();
 		getLocationOnScreen();
 		d = getSize();
-		new ChooseCategory(userNow, d, p, false);
+		try {
+			new ChooseCategory(userNow, d, p, false);
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.dispose();
 	}
 
@@ -98,7 +104,12 @@ public class PlayOrCreate extends JFrame {
 		p = getLocationOnScreen();
 		getLocationOnScreen();
 		d = getSize();
-		new ChooseCategory(userNow, d, p, true);
+		try {
+			new ChooseCategory(userNow, d, p, true);
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.dispose();
 	}

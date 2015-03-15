@@ -1,6 +1,6 @@
-package CustomClass;
+package server;
 
-public class Movie {
+public class Movie implements java.io.Serializable {
 	private int id;
 	private int owner;
 	private String name;

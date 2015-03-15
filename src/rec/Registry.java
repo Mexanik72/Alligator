@@ -3,14 +3,14 @@ package rec;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import CustomClass.User;
-import DataBase.DataBaseUsers;
+import server.User;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 
@@ -117,10 +117,10 @@ public class Registry extends JFrame {
 				user1.setUsername(userName.getText());
 				user1.setPassword(pass);
 				user1.setName(nameField.getText());
-				DataBaseUsers db = new DataBaseUsers();
+				ClientPart cl = new ClientPart();
 				try {
-					db.addUser(user1);
-				} catch (Exception e) {
+					cl.addUser(user1);
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

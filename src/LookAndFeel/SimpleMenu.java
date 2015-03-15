@@ -3,17 +3,12 @@ package LookAndFeel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import rec.ClientPart;
 import rec.Enterance;
 import rec.RatesTabel;
-import CustomClass.User;
-import DataBase.DataBaseUsers;
+import server.User;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.*;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.awt.image.BufferedImage;
@@ -25,22 +20,14 @@ import java.io.IOException;
 public class SimpleMenu extends JApplet {
 
 	private JMenu menu;
-
 	private JMenuItem item1, item2, item3, item4;
-
 	private User userNow;
-
-	private class MenuItemListener
-
-	implements ActionListener {
+	
+	private class MenuItemListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			JMenuItem jmi =
-
-			(JMenuItem) e.getSource();
-
+			JMenuItem jmi =	(JMenuItem) e.getSource();
 			if (jmi.equals(item4))
-
 				System.exit(0);
 
 			if (jmi.equals(item1)) {
@@ -48,7 +35,6 @@ public class SimpleMenu extends JApplet {
 			}
 			
 			if (jmi.equals(item3)) {
-				
 				Enterance frame = new Enterance();
 				frame = new Enterance();
 				frame.setSize(500, 320);
@@ -90,24 +76,13 @@ public class SimpleMenu extends JApplet {
 		averimg = createImage(new FilteredImageSource(img.getSource(), asf));
 		menu.setIcon(new ImageIcon(averimg));
 		item1 = new JMenuItem("Таблица рекордов");
-
 		item2 = new JMenuItem("Загрузить аватар");
-
 		item3 = new JMenuItem("Сменить пользователя");
-
 		item4 = new JMenuItem("Выход");
-
-		item1.addActionListener(
-
-		new MenuItemListener());
-
-		item2.addActionListener(
-
-		new MenuItemListener());
-
-		item3.addActionListener(
-
-		new MenuItemListener());
+		
+		item1.addActionListener(new MenuItemListener());
+		item2.addActionListener(new MenuItemListener());
+		item3.addActionListener(new MenuItemListener());
 
 		item2.addActionListener((new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,15 +91,10 @@ public class SimpleMenu extends JApplet {
 		}));
 
 		menu.add(item1);
-
 		menu.add(item2);
-
 		menu.add(item3);
-
 		menu.add(item4);
-
 		menubar.add(menu);
-
 	}
 
 	private void loadImageMouseClicked() {
@@ -146,10 +116,10 @@ public class SimpleMenu extends JApplet {
 		String img = userNow.getUsername() + ".png";
 		File f = new File("src/Images/forUsers/" + img);
 		userNow.setImg(img);
-		DataBaseUsers db = new DataBaseUsers();
+		ClientPart cl = new ClientPart();
 		try {
-			db.setImg(userNow.getId(), img);
-		} catch (Exception e1) {
+			cl.setImg(userNow.getId(), img);
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}

@@ -2,7 +2,6 @@ package rec;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -11,9 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,12 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import CustomClass.Movie;
-import CustomClass.Score;
-import CustomClass.User;
-import CustomClass.Word;
-import DataBase.DataBaseMovies;
-import DataBase.DataBaseScore;
+import server.User;
+import server.Word;
 import LookAndFeel.CustomDialog;
 import LookAndFeel.MyButtonUI;
 import LookAndFeel.SimpleMenu;
@@ -228,13 +220,14 @@ public class RecordNew extends javax.swing.JFrame {
 
 		if (recordButton.getText().equals("Record")) {
 			fileLabel.setText("File:");
-			DataBaseMovies dbmv = new DataBaseMovies();
+			ClientPart cl = new ClientPart();
 			try {
-				ListIdmovies = dbmv.getMoviesIds();
-			} catch (Exception e) {
+				ListIdmovies = cl.getMoviesIds();
+			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			file = new File(ListIdmovies.size() + 1 + "_" + wordNow.getWord()
 					+ ".mov");
 			recordToFile(file);
@@ -249,35 +242,15 @@ public class RecordNew extends javax.swing.JFrame {
 	public void stopAndSend() {
 		stopRecording();
 		recordButton.setText("Record");
-		Movie mv = new Movie();
-
-		DataBaseMovies db = new DataBaseMovies();
-		mv.setOwner(userNow.getId());
-		mv.setName(file.toString());
-		mv.setWord(wordNow.getId());
-		
-		DataBaseScore dbs = new DataBaseScore();
+	
+		ClientPart cl = new ClientPart();
 		try {
-			int scoreNow = dbs.getScoreByUser(userNow.getId());
-			scoreNow = scoreNow + (wordNow.getRate() * 5);
-			java.util.Date someDate = Calendar.getInstance().getTime();
-			java.sql.Date sqlDate = new java.sql.Date(someDate.getTime());
-			Score score = new Score();
-			score.setDate(sqlDate);
-			//score.setDate(new Date(System.currentTimeMillis()));
-			score.setUser(userNow.getId());
-			score.setRate(scoreNow);
-			dbs.addScore(score);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			db.addMovie(mv);
-		} catch (Exception e) {
+			cl.addScoreAndMovie(userNow, file.toString(), wordNow);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		flag = true;
 		new ClientPart(file);
 		Dimension d = new Dimension();

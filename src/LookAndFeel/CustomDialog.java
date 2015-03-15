@@ -2,7 +2,7 @@ package LookAndFeel;
 
 import javax.swing.*;
 
-import CustomClass.Word;
+import server.Word;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -2,59 +2,52 @@ package rec;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import CustomClass.Score;
-import CustomClass.User;
-import DataBase.DataBaseScore;
-import DataBase.DataBaseUsers;
+
+
+import server.Score;
+import server.User;
 import LookAndFeel.ContentPanel;
 
 public class RatesTabel extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	User userNow;
 
 	public RatesTabel(User user) {
 		this.userNow = user;
-		initComponents();
-	}
-
-	/**
-	 * 
-	 */
-	private void initComponents() {
-
-		DataBaseScore dbs = new DataBaseScore();
-
-		int scoreInt = 0;
-		List<Score> listScores = new ArrayList<Score>();
-		Score score = new Score();
-
 		try {
-			scoreInt = dbs.getScoreByUser(userNow.getId());
-			listScores = dbs.getFiveTopUser();
-		} catch (Exception e) {
+			initComponents();
+		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
+*
+*/
+	private void initComponents() throws IOException, ClassNotFoundException {
+		ClientPart cl = new ClientPart();
+		List<Score> listScores;
+		int scoreInt = cl.getScoreByUser(userNow.getId());
+		listScores = cl.getFiveTopUsers();
+		Score score = new Score();
 		
-		
-		Font font    = new Font("TimesRoman", Font.BOLD,    16); 
-		JLabel lbl = new JLabel("Количество ваших очков: ");
+		Font font = new Font("TimesRoman", Font.BOLD, 16);
+		JLabel lbl = new JLabel("blabla: ");
+
 		lbl.setForeground(new Color(255, 181, 130));
 		lbl.setFont(font);
 		JLabel ownScore = new JLabel("" + scoreInt);
@@ -79,6 +72,7 @@ public class RatesTabel extends JFrame {
 		for (int i = 0; i < listScores.size(); i++) {
 			JLabel lb = new JLabel();
 			lb.setText(i+1 + ". ");
+
 			centerPanel.add(lb);
 			lb.setForeground(Color.white);
 			JLabel lbu = new JLabel();
@@ -90,7 +84,6 @@ public class RatesTabel extends JFrame {
 			lbr.setForeground(Color.white);
 			centerPanel.add(lbr);
 		}
-
 		
 		setTitle("Таблица рейтингов");
 		
@@ -111,4 +104,5 @@ public class RatesTabel extends JFrame {
 
 	JPanel northPanel = new JPanel();
 	JPanel centerPanel = new JPanel();
+
 }
