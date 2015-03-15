@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import rec.Enterance;
+import rec.RatesTabel;
 import CustomClass.User;
 import DataBase.DataBaseUsers;
 
@@ -43,7 +44,7 @@ public class SimpleMenu extends JApplet {
 				System.exit(0);
 
 			if (jmi.equals(item1)) {
-				
+				new RatesTabel(userNow);
 			}
 			
 			if (jmi.equals(item3)) {
@@ -54,10 +55,7 @@ public class SimpleMenu extends JApplet {
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				
-			} else
-
-				showStatus("My Simple Menu");
-
+			} 
 		}
 	}
 

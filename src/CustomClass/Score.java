@@ -7,6 +7,7 @@ public class Score {
 	private int user;
 	private Date date;
 	private int rate;
+	private String userStr;
 
 	public Score(int id, int user, Date date, int rate) {
 		this.id = id;
@@ -15,6 +16,10 @@ public class Score {
 		this.rate = rate;
 	}
 
+	public Score(String user, int rate) {
+		this.userStr = user;
+		this.rate = rate;
+	}
 	public Score() {
 		// TODO Auto-generated constructor stub
 	}
@@ -49,5 +54,13 @@ public class Score {
 	
 	public void setRate(int rate) {
 		this.rate = rate;
+	}
+
+	public String getUserStr() {
+		return userStr;
+	}
+	
+	public void setUserStr(String userStr) {
+		this.userStr = userStr;
 	}
 }
