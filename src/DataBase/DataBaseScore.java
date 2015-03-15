@@ -1,5 +1,6 @@
 package DataBase;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class DataBaseScore {
 
 		con.close();
 	}
-	
+
 	public int getScoreByUser(int user) throws Exception {
 		int score = 0;
 		Connection con = GetConnection.getConnection();
@@ -40,13 +41,28 @@ public class DataBaseScore {
 		st.setInt(1, user);
 
 		ResultSet rs = st.executeQuery();
-		
-		
+
 		while (rs.next()) {
 			score = rs.getInt(1);
 		}
 		rs.close();
 		con.close();
 		return score;
+	}
+
+	public List<Score> getFiveTopUser() throws Exception {
+		List<Score> ls = new ArrayList<Score>();
+		Connection con = GetConnection.getConnection();
+
+		ResultSet rs = con.createStatement().executeQuery("select users.username, MAX(score.rate) "
+						+ "from users inner join score on score.username = users.id "
+						+ "group by users.username order by MAX(score.rate) desc limit 10");
+
+		while (rs.next()) {
+			ls.add(new Score(rs.getString(1), rs.getInt(2)));
+		}
+		rs.close();
+		con.close();
+		return ls;
 	}
 }

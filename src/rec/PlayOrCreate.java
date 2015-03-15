@@ -2,6 +2,7 @@ package rec;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 
@@ -31,6 +32,9 @@ public class PlayOrCreate extends JFrame {
 		play = new javax.swing.JButton("Play");
 		create = new javax.swing.JButton("Create");
 
+		Font font    = new Font("TimesRoman", Font.BOLD,    36); 
+		play.setFont(font);
+		create.setFont(font);
 		// setSize(720, 720);
 		setSize(d);
 		if (p == null) {
@@ -67,7 +71,7 @@ public class PlayOrCreate extends JFrame {
 
 		setTitle("PlayOrCreate");
 
-		centerPanel.setLayout(new GridLayout(2, 1, 0, 100));
+		centerPanel.setLayout(new GridLayout(2, 1, 0, 30));
 		northPanel.setOpaque(false);
 		centerPanel.setOpaque(false);
 		pa.add(northPanel, java.awt.BorderLayout.NORTH);
