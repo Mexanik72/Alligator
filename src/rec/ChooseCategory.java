@@ -100,15 +100,21 @@ public class ChooseCategory extends javax.swing.JFrame {
 		centerPanel.setOpaque(false);
 		northPanel.setLayout(new java.awt.BorderLayout());
 		northPanel.setOpaque(false);
-		hiLabel.setText("  " + userNow.getName()
-				+ ", пожалуйста, выберите одну из категорий");
+		if (boo)
+			hiLabel.setText("  "
+					+ userNow.getName()
+					+ ", пожалуйста, выберите одну из категорий дл€ записи видеоролика");
+		else
+			hiLabel.setText("  "
+					+ userNow.getName()
+					+ ", пожалуйста, выберите одну из категорий дл€ воспроизведени€ видеоролика");
 		hiLabel.setForeground(Color.WHITE);
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout());
 		p.add(RoundButton, java.awt.BorderLayout.WEST);
 		p.add(hiLabel, java.awt.BorderLayout.EAST);
 		p.setOpaque(false);
-		
+
 		northPanel.add(p, java.awt.BorderLayout.WEST);
 		SimpleMenu sm = new SimpleMenu(userNow);
 		northPanel.add(sm, java.awt.BorderLayout.EAST);
@@ -152,9 +158,9 @@ public class ChooseCategory extends javax.swing.JFrame {
 		} else {
 			this.dispose();
 			movieNow = chooseVideo(categ.getId());
-			
+
 			if (movieNow != null) {
-				new PlayVideo(userNow, movieNow);
+				new PlayVideo(userNow, movieNow, categ);
 			}
 		}
 	}
@@ -167,19 +173,17 @@ public class ChooseCategory extends javax.swing.JFrame {
 		movies = cl.getMovieByCategor(categor);
 
 		if (movies.size() == 0) {
-			 Object[] inputs = { "¬ыбрать другое", "«аписать свое" };
+			Object[] inputs = { "¬ыбрать другое", "«аписать свое" };
 			int res = JOptionPane
 					.showOptionDialog(
 							null,
 							"¬ данной категории нет видео, вы можете выбрать видео из другой категории или записать свое",
 							"Sorry", JOptionPane.OK_CANCEL_OPTION,
-							JOptionPane.WARNING_MESSAGE, null, null, "");
-			if (res == JOptionPane.OK_OPTION) {
-				System.out.println("pfirk");
+							JOptionPane.WARNING_MESSAGE, null, inputs, "");
+			if (res == JOptionPane.YES_OPTION) {
 				new ChooseCategory(userNow, null, null, false);
 			}
-			if (res == JOptionPane.CANCEL_OPTION) {
-				System.out.println("we");
+			if (res == JOptionPane.NO_OPTION) {
 				new ChooseCategory(userNow, null, null, true);
 			}
 		} else {

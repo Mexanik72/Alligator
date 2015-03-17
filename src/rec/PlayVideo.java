@@ -44,17 +44,19 @@ public class PlayVideo extends JFrame {
 	private Movie movieNow;
 	private int rate;
 	private List<String> Key_words;
+	private int attempt;
 
-	public PlayVideo(User user, Movie mov)
+	public PlayVideo(User user, Movie mov, Categories categor)
 			throws ClassNotFoundException, IOException {
 		this.movieNow = mov;
+		this.categor = categor;
 		// if (movieChooser == null)
 		// movieChooser = new JFileChooser();
 		// movieChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		// movieChooser.addChoosableFileFilter(new MOVFilter());
 		// movieChooser.setAcceptAllFileFilterUsed(false);
 		// movieChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
+		this.attempt = 3;
 		this.userNow = user;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("PLAYVIDEO");
@@ -80,7 +82,7 @@ public class PlayVideo extends JFrame {
 		// getContentPane().add(button, BorderLayout.NORTH);
 		// int category = 2;
 
-		//movieNow = chooseVideo(categor.getId());
+		// movieNow = chooseVideo(categor.getId());
 		ClientPart cl = new ClientPart();
 		if (movieNow != null) {
 			movieNow = cl.getVideo(movieNow);
@@ -116,24 +118,24 @@ public class PlayVideo extends JFrame {
 						contentPane.validate();
 					}
 				}
-				Component cpc = player.getControlPanelComponent();
-				if (cpc != null) {
-					contentPane.add(cpc, BorderLayout.SOUTH);
-					south = cpc;
-				} else {
-					if (south != null) {
-						contentPane.remove(south);
-						contentPane.validate();
-					}
-				}
+				// Component cpc = player.getControlPanelComponent();
+				// if (cpc != null) {
+				// contentPane.add(cpc, BorderLayout.SOUTH);
+				// south = cpc;
+				// } else {
+				// if (south != null) {
+				// contentPane.remove(south);
+				// contentPane.validate();
+				// }
+				// }
 				pack();
-				setTitle(file.getName());
+				setTitle("Воспроизведение");
 			}
 		};
 		player.addControllerListener(listener);
 		player.start();
 		final JTextField crocoText = new HintTextField(
-				"Какое слово изображает этот человек? " + "Категория: "
+				"Какое слово изображает этот человек?   " + "Категория: "
 						+ categor.getName());
 		contentPane.add(crocoText, BorderLayout.NORTH);
 
@@ -144,43 +146,85 @@ public class PlayVideo extends JFrame {
 				int key = e.getKeyCode();
 
 				if (key == KeyEvent.VK_ENTER) {
-				     ClientPart cl = new ClientPart();
-				     try {
-				      Key_words = cl.getKeyWords(movieNow.getWord());
-				     } catch (IOException e1) {
-				      // TODO Auto-generated catch block
-				      e1.printStackTrace();
-				     } catch (ClassNotFoundException e1) {
-				      // TODO Auto-generated catch block
-				      e1.printStackTrace();
-				     }
-				     for (int i = 0; i < Key_words.size(); i++) {
-				      if (Key_words.get(i).equals(
-				        crocoText.getText().toLowerCase())) {
-				       Dimension d = new Dimension();
-				       Point p;
-				       p = getLocationOnScreen();
-				       d.setSize(700, 700);
-				       clos();
-				       java.util.Date someDate = Calendar.getInstance()
-				         .getTime();
-				       java.sql.Date sqlDate = new java.sql.Date(someDate
-				         .getTime());
-				       jop();
-				       ClientPart cl1 = new ClientPart();
-				       try {
-				        cl1.addRateToMovie(movieNow, sqlDate, rate);
-				       } catch (IOException e1) {
-				        // TODO Auto-generated catch block
-				        e1.printStackTrace();
-				       }
-				       
-				       new PlayOrCreate(userNow, d, null);
-				      } else {
-				       System.out.println("bad");
-				      }
-				     }
-				    }
+					ClientPart cl = new ClientPart();
+					try {
+						Key_words = cl.getKeyWords(movieNow.getWord());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					for (int i = 0; i < Key_words.size(); i++) {
+						if (Key_words.get(i).equals(
+								crocoText.getText().toLowerCase())) {
+							Dimension d = new Dimension();
+							Point p;
+							p = getLocationOnScreen();
+							d.setSize(700, 700);
+							clos();
+							java.util.Date someDate = Calendar.getInstance()
+									.getTime();
+							java.sql.Date sqlDate = new java.sql.Date(someDate
+									.getTime());
+							jop();
+							ClientPart cl1 = new ClientPart();
+							try {
+								cl1.addRateToMovie(movieNow, sqlDate, rate);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							new PlayOrCreate(userNow, d, null);
+						} else {
+							crocoText.setText("");
+							attempt--;
+							if (attempt > 0) {
+								Object[] inputs = { "Попробовать ещё",
+										"Выйти в главное меню" };
+								int res = JOptionPane.showOptionDialog(null,
+										"К сожалению, вы не угадали, попробуйте снова. Осталось попыток: "
+												+ attempt, "Неверно",
+										JOptionPane.OK_OPTION,
+										JOptionPane.INFORMATION_MESSAGE, null,
+										inputs, "");
+								if (res == JOptionPane.YES_OPTION) {
+
+								}
+								if (res == JOptionPane.NO_OPTION) {
+									Dimension d = new Dimension();
+									d.setSize(700, 700);
+									clos();
+									new PlayOrCreate(userNow, d, null);
+								}
+							} else {
+								Object[] inputs = { "Выйти в главное меню" };
+								int res = JOptionPane
+										.showOptionDialog(
+												null,
+												"К сожалению, вы не угадали, и у вас не осталось попыток. Попробуйте заново",
+												"Неверно",
+												JOptionPane.OK_OPTION,
+												JOptionPane.INFORMATION_MESSAGE,
+												null, inputs, "");
+								if (res == JOptionPane.YES_OPTION) {
+									Dimension d = new Dimension();
+									d.setSize(700, 700);
+									clos();
+									new PlayOrCreate(userNow, d, null);
+								}
+								if (res == JOptionPane.DEFAULT_OPTION) {
+									Dimension d = new Dimension();
+									d.setSize(700, 700);
+									clos();
+									new PlayOrCreate(userNow, d, null);
+								}
+							}
+						}
+					}
+				}
 			}
 		});
 	}
@@ -199,5 +243,4 @@ public class PlayVideo extends JFrame {
 		this.dispose();
 	}
 
-	
 }

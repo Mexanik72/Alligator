@@ -1,6 +1,7 @@
 package rec;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -100,9 +101,16 @@ public class ChooseWord extends javax.swing.JFrame implements Runnable {
 		centerPanel.setOpaque(false);
 		northPanel.setLayout(new java.awt.BorderLayout());
 		northPanel.setOpaque(false);
-		hiLabel.setText("Hi, " + userNow.getName()
-				+ ", please, choose 1 of the buttons");
-		northPanel.add(RoundButton, java.awt.BorderLayout.WEST);
+		hiLabel.setText("    " + userNow.getName()
+				+ ", пожалуйста, выберите одно слово из категории: " + categoryNow.getName());
+		hiLabel.setForeground(Color.WHITE);
+		JPanel pn = new JPanel();
+		pn.setLayout(new BorderLayout());
+		pn.add(RoundButton, java.awt.BorderLayout.WEST);
+		pn.add(hiLabel, java.awt.BorderLayout.EAST);
+		pn.setOpaque(false);
+		
+		northPanel.add(pn, java.awt.BorderLayout.WEST);
 		SimpleMenu sm = new SimpleMenu(userNow);
 		northPanel.add(sm, java.awt.BorderLayout.EAST);
 		pa.add(northPanel, java.awt.BorderLayout.NORTH);
