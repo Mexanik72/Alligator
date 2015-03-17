@@ -27,9 +27,9 @@ public class SimpleMenu extends JApplet {
 
 		public void actionPerformed(ActionEvent e) {
 			JMenuItem jmi =	(JMenuItem) e.getSource();
-			if (jmi.equals(item4))
+			if (jmi.equals(item4)) {
 				System.exit(0);
-
+			}
 			if (jmi.equals(item1)) {
 				new RatesTabel(userNow);
 			}

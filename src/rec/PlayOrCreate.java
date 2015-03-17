@@ -30,12 +30,17 @@ public class PlayOrCreate extends JFrame {
 	private void initComponents() {
 		centerPanel = new javax.swing.JPanel();
 		northPanel = new javax.swing.JPanel();
-		play = new javax.swing.JButton("Play");
-		create = new javax.swing.JButton("Create");
+		play = new javax.swing.JButton(
+				"<html><body><font align='center' size='52'> Воспроизведение "
+						+ "</font><br><br><p aligin='center'><span style='color:#808080'><font size='5'> Нажмите, для просмотра видео"
+						+ "</font></span></p></body></html>");
+		create = new javax.swing.JButton("<html><body><font align='center' size='52'> Создание "
+						+ "</font><br><br><p aligin='center'><span style='color:#808080'><font size='5'> Нажмите, для записи нового видео"
+						+ "</font></span></p></body></html>");
 
-		Font font    = new Font("TimesRoman", Font.BOLD,    36); 
-		play.setFont(font);
-		create.setFont(font);
+		Font font = new Font("TimesRoman", Font.BOLD, 36);
+		// play.setFont(font);
+		// create.setFont(font);
 		// setSize(720, 720);
 		setSize(d);
 		if (p == null) {
@@ -43,7 +48,7 @@ public class PlayOrCreate extends JFrame {
 		} else {
 			setLocation(p);
 		}
-		
+
 		setVisible(true);
 
 		ContentPanel pa = new ContentPanel();

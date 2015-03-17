@@ -32,7 +32,7 @@ public class camDataSource {
 	public void setMainSource() {
 
 		setProcessing(false);
-		VideoFormat vidformat = new VideoFormat(VideoFormat.YUV);
+		VideoFormat vidformat = new VideoFormat(VideoFormat.YUV);//YUV
 		Vector devices = CaptureDeviceManager.getDeviceList(vidformat);
 
 		CaptureDeviceInfo di = null;
@@ -108,16 +108,16 @@ public class camDataSource {
 
 		processor.start(); // In order for or your clones to start, you must
 							// start the original source
-		/*
-		 * try{ Thread.sleep(10000); }catch(java.lang.InterruptedException e){}
-		 * 
-		 * Control control =
-		 * processor.getControl("javax.media.control.FrameRateControl"); if (
-		 * control != null && control instanceof
-		 * javax.media.control.FrameRateControl ){
-		 * ((javax.media.control.FrameRateControl)control).setFrameRate(0.2f); }
-		 * else{ System.out.println("no frame control"); }
-		 */
+		
+//		 try{ Thread.sleep(1000); }catch(java.lang.InterruptedException e){}
+//		 
+//		 Control control =
+//		 processor.getControl("javax.media.control.FrameRateControl"); if (
+//		 control != null && control instanceof
+//		 javax.media.control.FrameRateControl ){
+//		 ((javax.media.control.FrameRateControl)control).setFrameRate(0.1f); }
+//		 else{ System.out.println("no frame control"); }
+//		 
 
 		setProcessing(true);
 	}

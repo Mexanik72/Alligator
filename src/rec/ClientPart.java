@@ -1,6 +1,7 @@
 package rec;
 
 import java.net.Socket;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.*;
@@ -13,9 +14,8 @@ import server.Word;
 import server.Categories;
 
 public class ClientPart {
-	
+
 	private ArrayList<String> Categories;
-	
 
 	private Socket socket;
 	private int port = 2154;
@@ -120,26 +120,29 @@ public class ClientPart {
 		return null;
 	}
 
-	public ArrayList<String> getCategories() throws IOException, ClassNotFoundException {
+	public ArrayList<String> getCategories() throws IOException,
+			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(4);
+		System.out.println("4");
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        Categories = (ArrayList<String>) in.readObject();
-        in.close();
-        return Categories;
+		Categories = (ArrayList<String>) in.readObject();
+		in.close();
+		return Categories;
 	}
 
-	public Categories getIdByCategories(String str) throws IOException, ClassNotFoundException {
+	public Categories getIdByCategories(String str) throws IOException,
+			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		Categories categ;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(5);
 		outD.writeUTF(str);
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        categ = (server.Categories) in.readObject();
-        in.close();
-        return categ;
+		categ = (server.Categories) in.readObject();
+		in.close();
+		return categ;
 	}
 
 	public void setImg(int id, String img) throws IOException {
@@ -150,20 +153,22 @@ public class ClientPart {
 		outD.writeUTF(img);
 	}
 
-	public UserAttributes authentication(String user, String pass) throws IOException, ClassNotFoundException {
+	public UserAttributes authentication(String user, String pass)
+			throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(7);
 		outD.writeUTF(user);
 		outD.writeUTF(pass);
-		
+
 		boolean flagWrongUser = dis.readBoolean();
 		boolean flagWrongPassword = dis.readBoolean();
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		User User = (server.User) in.readObject();
 		in.close();
-		
-		UserAttributes ua = new UserAttributes (User, flagWrongUser, flagWrongPassword);
+
+		UserAttributes ua = new UserAttributes(User, flagWrongUser,
+				flagWrongPassword);
 		return ua;
 	}
 
@@ -171,84 +176,97 @@ public class ClientPart {
 		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(8);
-		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(user);
-        out.close();
+		ObjectOutputStream out = new ObjectOutputStream(
+				socket.getOutputStream());
+		out.writeObject(user);
+		out.close();
 	}
 
-	public boolean getKeyWords(Movie movieNow, int rate, String text) throws IOException {
-		// TODO Auto-generated method stub
+	public List<String> getKeyWords(int movie) throws IOException,
+			ClassNotFoundException {
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(9);
-		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(movieNow);
-        out.close();
-        outD.writeInt(rate);
-        outD.writeUTF(text);
-		
-		boolean guess = dis.readBoolean();
-		return guess;
+		outD.writeInt(movie);
+		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+		return (List<String>) in.readObject();
 	}
 
-	public List<Movie> getMovieByCategor(int categor) throws IOException, ClassNotFoundException {
+	public void addRateToMovie(Movie movieNow, Date sqlDate, int rate)
+			throws IOException {
+		outD = new DataOutputStream(socket.getOutputStream());
+		outD.writeInt(17);
+		ObjectOutputStream out = new ObjectOutputStream(
+				socket.getOutputStream());
+		out.writeObject(movieNow);
+		out.writeObject(sqlDate);
+		outD.writeInt(rate);
+	}
+
+	public List<Movie> getMovieByCategor(int categor) throws IOException,
+			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		List<Movie> movies;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(10);
 		outD.writeInt(categor);
-		
+
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		movies = (List<Movie>) in.readObject();
 		in.close();
-		
+
 		return movies;
 	}
 
-	public List<Integer> getMoviesIds() throws IOException, ClassNotFoundException {
+	public List<Integer> getMoviesIds() throws IOException,
+			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		List<Integer> ListIdMovies;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(11);
-		
+
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		ListIdMovies = (List<Integer>) in.readObject();
 		in.close();
-		
+
 		return ListIdMovies;
 	}
 
-	public void addScoreAndMovie(User userNow, String string, Word wordNow) throws IOException {
+	public void addScoreAndMovie(User userNow, String string, Word wordNow)
+			throws IOException {
 		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(12);
 		outD.writeUTF(string);
-		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(userNow);
-        out.writeObject(wordNow);
-        out.close();
+		ObjectOutputStream out = new ObjectOutputStream(
+				socket.getOutputStream());
+		out.writeObject(userNow);
+		out.writeObject(wordNow);
+		out.close();
 	}
 
-	public ArrayList<String> getWordsWhereC(int categoryNow) throws IOException, ClassNotFoundException {
+	public ArrayList<String> getWordsWhereC(int categoryNow)
+			throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		ArrayList<String> words;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(13);
 		outD.writeInt(categoryNow);
-		
+
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		words = (ArrayList<String>) in.readObject();
 		in.close();
-		
+
 		return words;
 	}
 
-	public Word getIdByWords(String word) throws IOException, ClassNotFoundException {
+	public Word getIdByWords(String word) throws IOException,
+			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		Word wordNow = null;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(14);
 		outD.writeUTF(word);
-		
+
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		wordNow = (Word) in.readObject();
 		in.close();
@@ -259,12 +277,13 @@ public class ClientPart {
 		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(15);
-		
+		outD.writeInt(user);
 		int scoreInt = dis.readInt();
 		return scoreInt;
 	}
 
-	public List<Score> getFiveTopUsers() throws IOException, ClassNotFoundException {
+	public List<Score> getFiveTopUsers() throws IOException,
+			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		List<Score> listScores;
 		outD = new DataOutputStream(socket.getOutputStream());

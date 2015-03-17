@@ -1,19 +1,23 @@
 package rec;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import server.Movie;
 import server.User;
 import LookAndFeel.ContentPanel;
 import LookAndFeel.MyButtonUI;
@@ -32,9 +36,10 @@ public class ChooseCategory extends javax.swing.JFrame {
 	private Dimension d;
 	private Point p;
 	private boolean boo;
+	private Movie movieNow;
 
-	public ChooseCategory(User user, Dimension d, Point p, boolean boo) throws ClassNotFoundException, IOException
-	{
+	public ChooseCategory(User user, Dimension d, Point p, boolean boo)
+			throws ClassNotFoundException, IOException {
 		this.userNow = user;
 		this.d = d;
 		this.p = p;
@@ -44,8 +49,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 		initComponents();
 	}
 
-	private void initComponents()
-	{
+	private void initComponents() {
 		centerPanel = new JPanel();
 		northPanel = new JPanel();
 		southPanel = new JPanel();
@@ -96,9 +100,16 @@ public class ChooseCategory extends javax.swing.JFrame {
 		centerPanel.setOpaque(false);
 		northPanel.setLayout(new java.awt.BorderLayout());
 		northPanel.setOpaque(false);
-		hiLabel.setText("Hi, " + userNow.getName()
-				+ ", please, choose 1 of the buttons");
-		northPanel.add(RoundButton, java.awt.BorderLayout.WEST);
+		hiLabel.setText("  " + userNow.getName()
+				+ ", пожалуйста, выберите одну из категорий");
+		hiLabel.setForeground(Color.WHITE);
+		JPanel p = new JPanel();
+		p.setLayout(new BorderLayout());
+		p.add(RoundButton, java.awt.BorderLayout.WEST);
+		p.add(hiLabel, java.awt.BorderLayout.EAST);
+		p.setOpaque(false);
+		
+		northPanel.add(p, java.awt.BorderLayout.WEST);
 		SimpleMenu sm = new SimpleMenu(userNow);
 		northPanel.add(sm, java.awt.BorderLayout.EAST);
 		pa.add(northPanel, java.awt.BorderLayout.NORTH);
@@ -121,7 +132,8 @@ public class ChooseCategory extends javax.swing.JFrame {
 		this.dispose();
 	}
 
-	void buttonActionPerformed(String str) throws ClassNotFoundException, IOException {
+	void buttonActionPerformed(String str) throws ClassNotFoundException,
+			IOException {
 		ClientPart cl = new ClientPart();
 		try {
 			categ = cl.getIdByCategories(str);
@@ -129,7 +141,7 @@ public class ChooseCategory extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if (boo) {
 			Dimension d;
 			Point p;
@@ -139,8 +151,44 @@ public class ChooseCategory extends javax.swing.JFrame {
 			this.dispose();
 		} else {
 			this.dispose();
-			new PlayVideo(userNow, categ);
+			movieNow = chooseVideo(categ.getId());
+			
+			if (movieNow != null) {
+				new PlayVideo(userNow, movieNow);
+			}
 		}
+	}
+
+	public Movie chooseVideo(int categor) throws ClassNotFoundException,
+			IOException {
+		List<Movie> movies = new ArrayList<Movie>();
+
+		ClientPart cl = new ClientPart();
+		movies = cl.getMovieByCategor(categor);
+
+		if (movies.size() == 0) {
+			 Object[] inputs = { "¬ыбрать другое", "«аписать свое" };
+			int res = JOptionPane
+					.showOptionDialog(
+							null,
+							"¬ данной категории нет видео, вы можете выбрать видео из другой категории или записать свое",
+							"Sorry", JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.WARNING_MESSAGE, null, null, "");
+			if (res == JOptionPane.OK_OPTION) {
+				System.out.println("pfirk");
+				new ChooseCategory(userNow, null, null, false);
+			}
+			if (res == JOptionPane.CANCEL_OPTION) {
+				System.out.println("we");
+				new ChooseCategory(userNow, null, null, true);
+			}
+		} else {
+
+			Movie mov = movies.get((int) (Math.random() * movies.size()));
+			System.out.println(mov.getName());
+			return mov;
+		}
+		return null;
 	}
 
 	private javax.swing.JPanel centerPanel;

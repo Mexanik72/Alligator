@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.media.ControllerAdapter;
@@ -42,9 +43,11 @@ public class PlayVideo extends JFrame {
 	private Categories categor;
 	private Movie movieNow;
 	private int rate;
+	private List<String> Key_words;
 
-	public PlayVideo(User user, Categories categor) throws ClassNotFoundException, IOException {
-		this.categor = categor;
+	public PlayVideo(User user, Movie mov)
+			throws ClassNotFoundException, IOException {
+		this.movieNow = mov;
 		// if (movieChooser == null)
 		// movieChooser = new JFileChooser();
 		// movieChooser.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -54,6 +57,7 @@ public class PlayVideo extends JFrame {
 
 		this.userNow = user;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("PLAYVIDEO");
 		// button = new JButton("Select File");
 		// ActionListener listener = new ActionListener() {
 		// public void actionPerformed(ActionEvent event) {
@@ -76,7 +80,7 @@ public class PlayVideo extends JFrame {
 		// getContentPane().add(button, BorderLayout.NORTH);
 		// int category = 2;
 
-		movieNow = chooseVideo(categor.getId());
+		//movieNow = chooseVideo(categor.getId());
 		ClientPart cl = new ClientPart();
 		if (movieNow != null) {
 			movieNow = cl.getVideo(movieNow);
@@ -129,7 +133,7 @@ public class PlayVideo extends JFrame {
 		player.addControllerListener(listener);
 		player.start();
 		final JTextField crocoText = new HintTextField(
-				"Какое слово изображает этот человек?" + "Категория: "
+				"Какое слово изображает этот человек? " + "Категория: "
 						+ categor.getName());
 		contentPane.add(crocoText, BorderLayout.NORTH);
 
@@ -140,26 +144,43 @@ public class PlayVideo extends JFrame {
 				int key = e.getKeyCode();
 
 				if (key == KeyEvent.VK_ENTER) {
-					ClientPart cl = new ClientPart();
-					boolean guess = false;
-					try {
-						guess = cl.getKeyWords(movieNow, rate, crocoText.getText().toLowerCase());
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}					
-					if (guess) {
-						Dimension d = new Dimension();
-						Point p;
-						p = getLocationOnScreen();
-						d.setSize(700, 700);
-						clos();
-						jop();
-						new PlayOrCreate(userNow, d, null);
-					} else {
-						System.out.println("bad");
-					}
-				}
+				     ClientPart cl = new ClientPart();
+				     try {
+				      Key_words = cl.getKeyWords(movieNow.getWord());
+				     } catch (IOException e1) {
+				      // TODO Auto-generated catch block
+				      e1.printStackTrace();
+				     } catch (ClassNotFoundException e1) {
+				      // TODO Auto-generated catch block
+				      e1.printStackTrace();
+				     }
+				     for (int i = 0; i < Key_words.size(); i++) {
+				      if (Key_words.get(i).equals(
+				        crocoText.getText().toLowerCase())) {
+				       Dimension d = new Dimension();
+				       Point p;
+				       p = getLocationOnScreen();
+				       d.setSize(700, 700);
+				       clos();
+				       java.util.Date someDate = Calendar.getInstance()
+				         .getTime();
+				       java.sql.Date sqlDate = new java.sql.Date(someDate
+				         .getTime());
+				       jop();
+				       ClientPart cl1 = new ClientPart();
+				       try {
+				        cl1.addRateToMovie(movieNow, sqlDate, rate);
+				       } catch (IOException e1) {
+				        // TODO Auto-generated catch block
+				        e1.printStackTrace();
+				       }
+				       
+				       new PlayOrCreate(userNow, d, null);
+				      } else {
+				       System.out.println("bad");
+				      }
+				     }
+				    }
 			}
 		});
 	}
@@ -171,44 +192,12 @@ public class PlayVideo extends JFrame {
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
 				null, inputs, "");
 		this.rate = rap.getRate();
-		
+
 	}
 
 	public void clos() {
 		this.dispose();
 	}
 
-	public Movie chooseVideo(int categor) throws ClassNotFoundException, IOException {
-		List<Movie> movies = new ArrayList<Movie>();
-		
-		ClientPart cl = new ClientPart();
-		movies = cl.getMovieByCategor(categor);
-
-		if (movies.size() == 0) {
-			// Object[] inputs = { "Выбрать другое", "Записать свое" };
-			int res = JOptionPane
-					.showOptionDialog(
-							null,
-							"В данной категории нет видео, вы можете выбрать видео из другой категории или записать свое",
-							"Sorry", JOptionPane.OK_CANCEL_OPTION,
-							JOptionPane.WARNING_MESSAGE, null, null, "");
-			if (res == JOptionPane.OK_OPTION) {
-				System.out.println("pfirk");
-				new ChooseCategory(userNow, null, null, false);
-				clos();
-			}
-			if (res == JOptionPane.CANCEL_OPTION) {
-				System.out.println("we");
-				new ChooseCategory(userNow, null, null, true);
-				clos();
-			}
-			clos();
-		} else {
-
-			Movie mov = movies.get((int) (Math.random() * movies.size()));
-			System.out.println(mov.getName());
-			return mov;
-		}
-		return null;
-	}
+	
 }

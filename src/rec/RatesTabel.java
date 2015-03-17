@@ -42,7 +42,8 @@ public class RatesTabel extends JFrame {
 		ClientPart cl = new ClientPart();
 		List<Score> listScores;
 		int scoreInt = cl.getScoreByUser(userNow.getId());
-		listScores = cl.getFiveTopUsers();
+		ClientPart cl1 = new ClientPart();
+		listScores = cl1.getFiveTopUsers();
 		Score score = new Score();
 		
 		Font font = new Font("TimesRoman", Font.BOLD, 16);

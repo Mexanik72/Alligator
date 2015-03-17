@@ -229,7 +229,7 @@ public class RecordNew extends javax.swing.JFrame {
 			}
 			
 			file = new File(ListIdmovies.size() + 1 + "_" + wordNow.getWord()
-					+ ".mov");
+					+ ".mov");//mov
 			recordToFile(file);
 			new Timer().schedule(new GameTimer(), 10);
 			fileLabel.setText("File:" + file.toString());
@@ -295,11 +295,11 @@ public class RecordNew extends javax.swing.JFrame {
 		}
 		// Format[] formats = new Format[2];
 		// formats[1] = new AudioFormat(AudioFormat.IMA4);
-		VideoFormat vfmt = new VideoFormat(VideoFormat.CINEPAK);
+		VideoFormat vfmt = new VideoFormat(VideoFormat.CINEPAK);//cinepak
 		(recordProcessor.getTrackControls())[0].setFormat(vfmt);
 		(recordProcessor.getTrackControls())[0].setEnabled(true);
 		recordProcessor.setContentDescriptor(new FileTypeDescriptor(
-				FileTypeDescriptor.QUICKTIME));
+				FileTypeDescriptor.QUICKTIME));//qucktime
 		// FileTypeDescriptor outputType =
 		// new FileTypeDescriptor(FileTypeDescriptor.QUICKTIME);
 
@@ -312,11 +312,11 @@ public class RecordNew extends javax.swing.JFrame {
 					"Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		// Control control =
-		// recordProcessor.getControl("javax.media.control.FrameRateControl");
-		// if ( control != null && control instanceof
-		// javax.media.control.FrameRateControl )
-		// ((javax.media.control.FrameRateControl)control).setFrameRate(0.7f);
+		 Control control =
+		 recordProcessor.getControl("javax.media.control.FrameRateControl");
+		 if ( control != null && control instanceof
+		 javax.media.control.FrameRateControl )
+		 ((javax.media.control.FrameRateControl)control).setFrameRate(900.0f);
 		try {
 			if (recordProcessor.getDataOutput() == null) {
 				JOptionPane.showMessageDialog(this, "No Data Output", "Error",
