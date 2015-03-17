@@ -49,7 +49,6 @@ public class ClientPart {
 		try {
 			in = socket.getInputStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		dis = new DataInputStream(in);
@@ -59,8 +58,8 @@ public class ClientPart {
 		try {
 			outD = new DataOutputStream(socket.getOutputStream());
 			outD.writeInt(3);
-			outD.writeLong(selectedFile.length());// отсылаем размер файла
-			outD.writeUTF(selectedFile.getName());// отсылаем имя файла
+			outD.writeLong(selectedFile.length());
+			outD.writeUTF(selectedFile.getName());
 
 			in = new FileInputStream(selectedFile);
 			byte[] buffer = new byte[64 * 1024];
@@ -77,24 +76,13 @@ public class ClientPart {
 		}
 	}
 
-	public void getUserIcon(int userId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void getButtonIcon(String buttonText) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public Movie getVideo(Movie movie) {
-		// TODO Auto-generated method stub
 		this.movieNow = movie;
 		try {
 			outD = new DataOutputStream(socket.getOutputStream());
 			outD.writeInt(0);
 			outD.writeUTF(movieNow.getName());
-			long fileSize = dis.readLong(); // получаем размер файла
+			long fileSize = dis.readLong();
 
 			byte[] buffer = new byte[64 * 1024];
 			FileOutputStream outF = new FileOutputStream(movieNow.getName());
@@ -114,7 +102,6 @@ public class ClientPart {
 
 			return movieNow;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -122,10 +109,8 @@ public class ClientPart {
 
 	public ArrayList<String> getCategories() throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(4);
-		System.out.println("4");
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		Categories = (ArrayList<String>) in.readObject();
 		in.close();
@@ -134,7 +119,6 @@ public class ClientPart {
 
 	public Categories getIdByCategories(String str) throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		Categories categ;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(5);
@@ -146,7 +130,6 @@ public class ClientPart {
 	}
 
 	public void setImg(int id, String img) throws IOException {
-		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(6);
 		outD.writeInt(id);
@@ -155,7 +138,6 @@ public class ClientPart {
 
 	public UserAttributes authentication(String user, String pass)
 			throws IOException, ClassNotFoundException {
-		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(7);
 		outD.writeUTF(user);
@@ -173,7 +155,6 @@ public class ClientPart {
 	}
 
 	public void addUser(User user) throws IOException {
-		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(8);
 		ObjectOutputStream out = new ObjectOutputStream(
@@ -204,7 +185,6 @@ public class ClientPart {
 
 	public List<Movie> getMovieByCategor(int categor) throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		List<Movie> movies;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(10);
@@ -219,7 +199,6 @@ public class ClientPart {
 
 	public List<Integer> getMoviesIds() throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		List<Integer> ListIdMovies;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(11);
@@ -233,7 +212,6 @@ public class ClientPart {
 
 	public void addScoreAndMovie(User userNow, String string, Word wordNow)
 			throws IOException {
-		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(12);
 		outD.writeUTF(string);
@@ -246,7 +224,6 @@ public class ClientPart {
 
 	public ArrayList<String> getWordsWhereC(int categoryNow)
 			throws IOException, ClassNotFoundException {
-		// TODO Auto-generated method stub
 		ArrayList<String> words;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(13);
@@ -261,7 +238,6 @@ public class ClientPart {
 
 	public Word getIdByWords(String word) throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		Word wordNow = null;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(14);
@@ -274,7 +250,6 @@ public class ClientPart {
 	}
 
 	public int getScoreByUser(int user) throws IOException {
-		// TODO Auto-generated method stub
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(15);
 		outD.writeInt(user);
@@ -284,7 +259,6 @@ public class ClientPart {
 
 	public List<Score> getFiveTopUsers() throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		List<Score> listScores;
 		outD = new DataOutputStream(socket.getOutputStream());
 		outD.writeInt(16);
