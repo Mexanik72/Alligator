@@ -90,7 +90,6 @@ public class PlayVideo extends JFrame {
 			try {
 				load(file);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -150,10 +149,8 @@ public class PlayVideo extends JFrame {
 					try {
 						Key_words = cl.getKeyWords(movieNow.getWord());
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					for (int i = 0; i < Key_words.size(); i++) {
@@ -168,12 +165,17 @@ public class PlayVideo extends JFrame {
 									.getTime();
 							java.sql.Date sqlDate = new java.sql.Date(someDate
 									.getTime());
+							ClientPart cl0 = new ClientPart();
+							try {
+								cl0.addScore(attempt, movieNow, userNow);
+							} catch (IOException e2) {
+								e2.printStackTrace();
+							}
 							jop();
 							ClientPart cl1 = new ClientPart();
 							try {
 								cl1.addRateToMovie(movieNow, sqlDate, rate);
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 

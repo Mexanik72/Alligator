@@ -267,4 +267,16 @@ public class ClientPart {
 		in.close();
 		return listScores;
 	}
+
+	public void addScore(int attempt, Movie movieNow, User userNow) throws IOException {
+		// TODO Auto-generated method stub
+		outD = new DataOutputStream(socket.getOutputStream());
+		outD.writeInt(18);
+		outD.writeInt(attempt);
+		ObjectOutputStream out = new ObjectOutputStream(
+				socket.getOutputStream());
+		out.writeObject(userNow);
+		out.writeObject(movieNow);
+		out.close();
+	}
 }
