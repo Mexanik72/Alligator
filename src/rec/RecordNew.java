@@ -66,16 +66,12 @@ public class RecordNew extends javax.swing.JFrame {
 			UIManager.setLookAndFeel(UIManager
 					.getCrossPlatformLookAndFeelClassName());
 		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (InstantiationException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		initComponents();
@@ -160,31 +156,26 @@ public class RecordNew extends javax.swing.JFrame {
 		messageLabel.addMouseListener(new MouseListener() {
 
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				CustomDialog.showTooltipWindow(messageLabel, 2, wordNow);
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -224,7 +215,6 @@ public class RecordNew extends javax.swing.JFrame {
 			try {
 				ListIdmovies = cl.getMoviesIds();
 			} catch (ClassNotFoundException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -247,7 +237,6 @@ public class RecordNew extends javax.swing.JFrame {
 		try {
 			cl.addScoreAndMovie(userNow, file.toString(), wordNow);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
