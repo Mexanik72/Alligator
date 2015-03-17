@@ -189,7 +189,6 @@ public class ChooseCategory extends javax.swing.JFrame {
 		} else {
 
 			Movie mov = movies.get((int) (Math.random() * movies.size()));
-			System.out.println(mov.getName());
 			return mov;
 		}
 		return null;

@@ -73,6 +73,28 @@ public class DataBaseWord {
 		con.close();
 		return Words;
 	}
+	
+	public int getWordById(int id) throws Exception {
+		int rate = 0;
+		// Получение соединения с БД
+		Connection con = GetConnection.getConnection();
+
+		PreparedStatement st = con.prepareStatement(
+				"Select  rate " + "From words " + "Where id = ?");
+		st.setInt(1, id);
+		
+		ResultSet rs = st.executeQuery();
+		
+		while (rs.next()) {
+			// Из каждой строки выборки выбираем
+			// результат и помещаем в коллекцию
+			rate = rs.getInt(1);
+		}
+		st.close();
+		rs.close();
+		con.close();
+		return rate;
+	}
 
 	public List<String> getCategories() throws Exception {
 		List<String> Categories = new ArrayList<String>();
